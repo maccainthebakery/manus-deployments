@@ -1,0 +1,250 @@
+/* ============================================================
+   NRMA Agentic Financial Intelligence — Design System
+   Philosophy: Executive Command Centre
+   Theme: NRMA Blue (#003087) on White, diagonal accents,
+          large KPI callouts, smooth scroll animations
+   Fonts: Playfair Display (headlines) + DM Sans (body) + DM Mono (labels)
+   ============================================================ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* NRMA Custom Tokens */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  --nrma-navy: oklch(0.22 0.08 264);
+  --nrma-blue: oklch(0.38 0.14 264);
+  --nrma-mid: oklch(0.50 0.16 264);
+  --nrma-light: oklch(0.72 0.10 264);
+  --nrma-tint: oklch(0.96 0.02 264);
+  --nrma-cyan: oklch(0.75 0.15 220);
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.15 0.02 264);
+  --card: oklch(0.99 0.005 264);
+  --card-foreground: oklch(0.15 0.02 264);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.02 264);
+  --primary: oklch(0.30 0.12 264);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.95 0.02 264);
+  --secondary-foreground: oklch(0.22 0.08 264);
+  --muted: oklch(0.96 0.01 264);
+  --muted-foreground: oklch(0.50 0.05 264);
+  --accent: oklch(0.93 0.04 264);
+  --accent-foreground: oklch(0.22 0.08 264);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.90 0.02 264);
+  --input: oklch(0.90 0.02 264);
+  --ring: oklch(0.38 0.14 264);
+  --chart-1: oklch(0.38 0.14 264);
+  --chart-2: oklch(0.50 0.16 264);
+  --chart-3: oklch(0.65 0.12 264);
+  --chart-4: oklch(0.75 0.10 264);
+  --chart-5: oklch(0.22 0.08 264);
+  --sidebar: oklch(0.22 0.08 264);
+  --sidebar-foreground: oklch(0.95 0.01 264);
+  --sidebar-primary: oklch(0.75 0.10 264);
+  --sidebar-primary-foreground: oklch(0.22 0.08 264);
+  --sidebar-accent: oklch(0.30 0.10 264);
+  --sidebar-accent-foreground: oklch(0.95 0.01 264);
+  --sidebar-border: oklch(0.30 0.10 264);
+  --sidebar-ring: oklch(0.50 0.16 264);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+  }
+  h4, h5, h6 {
+    font-family: var(--font-body);
+    font-weight: 600;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a[href] {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1280px;
+    }
+  }
+
+  /* NRMA Brand Utilities */
+  .nrma-navy { background-color: var(--nrma-navy); }
+  .nrma-blue { background-color: var(--nrma-blue); }
+  .nrma-tint { background-color: var(--nrma-tint); }
+  .text-nrma-navy { color: var(--nrma-navy); }
+  .text-nrma-blue { color: var(--nrma-blue); }
+  .text-nrma-cyan { color: var(--nrma-cyan); }
+
+  /* Diagonal section divider */
+  .diagonal-top {
+    clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 100%);
+    margin-top: -3rem;
+    padding-top: 5rem;
+  }
+  .diagonal-bottom {
+    clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+    padding-bottom: 5rem;
+  }
+
+  /* Animated counter */
+  .stat-number {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    color: var(--nrma-navy);
+  }
+
+  /* Mono label */
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--nrma-blue);
+  }
+
+  /* Card hover lift */
+  .card-lift {
+    transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .card-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -12px oklch(0.22 0.08 264 / 0.18);
+  }
+
+  /* Scroll fade-in animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  /* Number count-up animation */
+  @keyframes countUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-count-up {
+    animation: countUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, oklch(0.22 0.08 264), oklch(0.50 0.16 264));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Blue glow border */
+  .glow-border {
+    border: 1px solid oklch(0.50 0.16 264 / 0.3);
+    box-shadow: 0 0 0 1px oklch(0.50 0.16 264 / 0.1),
+                inset 0 1px 0 oklch(1 0 0 / 0.05);
+  }
+
+  /* Architecture layer card */
+  .layer-card {
+    border-left: 3px solid var(--nrma-blue);
+    background: oklch(0.99 0.01 264);
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .layer-card:hover {
+    border-left-color: var(--nrma-navy);
+    background: oklch(0.97 0.02 264);
+  }
+}
