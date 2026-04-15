@@ -1,7 +1,7 @@
 /**
  * FoundationSetup.tsx
  * Design: Executive Command Centre — NRMA deep blue (#003087) on white
- * Role-filtered step-by-step guide for NetSuite admins and SO team
+ * Role-filtered step-by-step guide for NetSuite admins and AI & Automation Team
  * to establish the MCP plumbing before Perplexity integration
  */
 
@@ -101,8 +101,8 @@ const steps: Step[] = [
       "Name: Perplexity AI Connector — Sandbox",
       "Enable: Authorization Code Grant with PKCE",
       "Set Token-Based Authentication: Enabled",
-      "Redirect URI: https://www.perplexity.ai/oauth/callback (confirm with SO team)",
-      "Save and note the Client ID and Client Secret — share securely with SO team",
+      "Redirect URI: https://www.perplexity.ai/oauth/callback (confirm with AI & Automation Team)",
+      "Save and note the Client ID and Client Secret — share securely with AI & Automation Team",
     ],
     code: "MCP Server URL format:\nhttps://<sandboxaccountid>.suitetalk.api.netsuite.com/services/mcp/v1/all\n\nReplace <sandboxaccountid> with your sandbox account ID\n(found in Setup → Company → Company Information)",
     note:
@@ -114,17 +114,17 @@ const steps: Step[] = [
     phase: "NetSuite Sandbox",
     title: "Validate the MCP Endpoint is Reachable",
     description:
-      "Before handing over to the SO team, confirm the MCP server URL responds correctly. A simple browser or curl test confirms the endpoint is live.",
+      "Before handing over to the AI & Automation Team, confirm the MCP server URL responds correctly. A simple browser or curl test confirms the endpoint is live.",
     details: [
       "Open a browser and navigate to your MCP server URL (you will be prompted to authenticate)",
       "Confirm the OAuth login flow completes without errors",
       "Confirm the endpoint returns a list of available tools",
-      "Document the sandbox account ID and MCP URL for the SO team",
+      "Document the sandbox account ID and MCP URL for the AI & Automation Team",
       "Share the Client ID, Client Secret, and MCP URL securely (not via email — use a password manager or secure channel)",
     ],
     badge: "Handover Point",
     note:
-      'Once this step is complete, the NetSuite admin work is done. The SO team takes over from here.',
+      'Once this step is complete, the NetSuite admin work is done. The AI & Automation Team takes over from here.',
   },
   {
     id: 6,
@@ -214,7 +214,7 @@ const roleFilters: { value: Role; label: string; icon: ReactNode; desc: string }
   },
   {
     value: "team",
-    label: "SO Team",
+    label: "AI & Automation Team",
     icon: <Users className="w-4 h-4" />,
     desc: "Perplexity connector & test calls",
   },
@@ -273,7 +273,7 @@ export default function FoundationSetup() {
               <p className="mt-4 text-lg text-slate-600 max-w-2xl leading-relaxed">
                 Before Perplexity Computer can interrogate NetSuite data, two teams need to
                 establish the plumbing. NetSuite admins configure the sandbox and OAuth layer.
-                The SO team connects the Perplexity Enterprise tenant and validates the stack
+                The AI & Automation Team connects the Perplexity Enterprise tenant and validates the stack
                 with three test calls.
               </p>
             </div>
@@ -375,7 +375,7 @@ export default function FoundationSetup() {
                               : "bg-indigo-50 text-indigo-700"
                           }`}
                         >
-                          {isAdmin ? "NetSuite Admin" : "SO Team"}
+                          {isAdmin ? "NetSuite Admin" : "AI & Automation Team"}
                         </span>
                         {/* Special badge */}
                         {step.badge && (
