@@ -10,11 +10,13 @@ import UseCases from "@/components/UseCases";
 import Roadmap from "@/components/Roadmap";
 import Footer from "@/components/Footer";
 import FoundationSetup from "@/components/FoundationSetup";
+import QuickJump from "@/components/QuickJump";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
+      <QuickJump />
       <Hero />
       <Opportunity />
       <Architecture />
