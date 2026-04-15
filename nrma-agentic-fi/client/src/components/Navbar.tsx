@@ -10,6 +10,7 @@ const navLinks = [
   { label: "Architecture", href: "#architecture" },
   { label: "Use Cases", href: "#usecases" },
   { label: "Roadmap", href: "#roadmap" },
+  { label: "Foundation Setup", href: "#foundation" },
   { label: "Get Started", href: "#cta" },
 ];
 

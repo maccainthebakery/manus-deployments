@@ -9,6 +9,7 @@ import Architecture from "@/components/Architecture";
 import UseCases from "@/components/UseCases";
 import Roadmap from "@/components/Roadmap";
 import Footer from "@/components/Footer";
+import FoundationSetup from "@/components/FoundationSetup";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
       <Architecture />
       <UseCases />
       <Roadmap />
+      <FoundationSetup />
       <Footer />
     </div>
   );
