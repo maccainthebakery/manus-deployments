@@ -10,6 +10,7 @@ import UseCases from "@/components/UseCases";
 import Roadmap from "@/components/Roadmap";
 import Footer from "@/components/Footer";
 import FoundationSetup from "@/components/FoundationSetup";
+import SemanticLayer from "@/components/SemanticLayer";
 import QuickJump from "@/components/QuickJump";
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
       <Hero />
       <Opportunity />
       <Architecture />
+      <SemanticLayer />
       <UseCases />
       <Roadmap />
       <FoundationSetup />

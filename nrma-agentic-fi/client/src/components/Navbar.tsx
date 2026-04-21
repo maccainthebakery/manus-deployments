@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react";
 const navLinks = [
   { label: "The Opportunity", href: "#opportunity" },
   { label: "Architecture", href: "#architecture" },
+  { label: "Semantic Layer", href: "#semantic-layer" },
   { label: "Use Cases", href: "#usecases" },
   { label: "Roadmap", href: "#roadmap" },
   { label: "Foundation Setup", href: "#foundation" },
