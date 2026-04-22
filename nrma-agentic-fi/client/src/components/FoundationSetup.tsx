@@ -1,8 +1,8 @@
 /**
  * FoundationSetup.tsx
  * Design: Executive Command Centre — NRMA deep blue (#003087) on white
- * Role-filtered step-by-step guide for NetSuite admins and AI & Automation Team
- * to establish the MCP plumbing before Perplexity integration
+ * Role-filtered step-by-step guide for NetSuite admins, Perplexity setup,
+ * and AI & Automation Team to establish the MCP plumbing before Perplexity integration
  */
 
 import { useState, type ReactNode } from "react";
@@ -17,19 +17,19 @@ import {
   ShieldCheck,
   Plug,
   FlaskConical,
-  AlertCircle,
   Info,
+  Zap,
 } from "lucide-react";
 
-type Role = "all" | "admin" | "team";
+type Role = "all" | "admin" | "perplexity" | "team";
 
 interface Step {
   id: number;
-  role: "admin" | "team" | "both";
+  role: "admin" | "team" | "perplexity" | "both";
   phase: string;
   title: string;
   description: string;
-  details: (string | undefined)[];
+  details: string[];
   note?: string;
   code?: string;
   badge?: string;
@@ -52,7 +52,7 @@ const steps: Step[] = [
     ],
     badge: "Free — No Licensing Cost",
     note:
-      'The AI Connector Service is not a paid feature. Oracle confirmed: NetSuite AI Connector Service is not a paid feature. MCP Standard Tools is a free SuiteApp.',
+      "The AI Connector Service is not a paid feature. Oracle confirmed: NetSuite AI Connector Service is not a paid feature. MCP Standard Tools is a free SuiteApp.",
   },
   {
     id: 2,
@@ -69,7 +69,7 @@ const steps: Step[] = [
       "Save changes",
     ],
     note:
-      'Do not use the Administrator role for the MCP connection — Oracle explicitly states it will not work. A custom role is required (see next step).',
+      "Do not use the Administrator role for the MCP connection — Oracle explicitly states it will not work. A custom role is required (see next step).",
   },
   {
     id: 3,
@@ -87,7 +87,7 @@ const steps: Step[] = [
       "Assign the role to the integration user account",
     ],
     note:
-      'Role-based security means the AI cannot access data beyond what this role permits. Start restrictive — you can expand permissions after the PoV validates the approach.',
+      "Role-based security means the AI cannot access data beyond what this role permits. Start restrictive — you can expand permissions after the PoV validates the approach.",
   },
   {
     id: 4,
@@ -106,48 +106,71 @@ const steps: Step[] = [
     ],
     code: "MCP Server URL format:\nhttps://<sandboxaccountid>.suitetalk.api.netsuite.com/services/mcp/v1/all\n\nReplace <sandboxaccountid> with your sandbox account ID\n(found in Setup → Company → Company Information)",
     note:
-      'The /all suffix is required. Without it, the connection will appear disconnected even if OAuth succeeds.',
+      "The /all suffix is required. Without it, the connection will appear disconnected even if OAuth succeeds.",
   },
   {
     id: 5,
     role: "admin",
     phase: "NetSuite Sandbox",
-    title: "Validate the MCP Endpoint is Reachable",
+    title: "Validate the MCP Endpoint & Hand Over",
     description:
-      "Before handing over to the AI & Automation Team, confirm the MCP server URL responds correctly. A simple browser or curl test confirms the endpoint is live.",
+      "Before handing over to the AI & Automation Team, confirm the MCP server URL responds correctly. A simple browser test confirms the endpoint is live.",
     details: [
       "Open a browser and navigate to your MCP server URL (you will be prompted to authenticate)",
       "Confirm the OAuth login flow completes without errors",
       "Confirm the endpoint returns a list of available tools",
-      "Document the sandbox account ID and MCP URL for the AI & Automation Team",
-      "Share the Client ID, Client Secret, and MCP URL securely (not via email — use a password manager or secure channel)",
+      "Document the sandbox account ID and MCP URL",
+      "Share the Client ID, Client Secret, and MCP URL securely — use a password manager or secure channel, not email",
     ],
     badge: "Handover Point",
     note:
-      'Once this step is complete, the NetSuite admin work is done. The AI & Automation Team takes over from here.',
+      "Once this step is complete, the NetSuite admin work is done. The AI & Automation Team takes over from here.",
   },
   {
     id: 6,
-    role: "team",
+    role: "perplexity",
     phase: "Perplexity Enterprise",
-    title: "Add NetSuite as a Custom Remote Connector",
+    title: "Enable Custom Connectors in Enterprise Settings",
     description:
-      "In your Perplexity Enterprise tenant, add the NetSuite sandbox as a custom MCP remote connector. You will need the MCP URL, Client ID, and Client Secret from the NetSuite admin.",
+      "Before any team member can add a custom connector, a Perplexity Enterprise admin must enable the feature for the organisation. This is disabled by default.",
     details: [
-      "Log into app.perplexity.ai with your Enterprise account",
-      "Go to Settings → Connectors → Add Custom Remote Connector",
-      "Enter the NetSuite MCP Server URL provided by the admin",
-      "Select OAuth 2.0 as the authentication method",
-      "Enter the Client ID and Client Secret",
-      "Complete the OAuth authorisation flow — you will be redirected to NetSuite to approve",
-      "Confirm the connector shows as Connected",
+      "Log into app.perplexity.ai as an Enterprise admin",
+      "Go to Enterprise Settings → Permissions → Connectors permissions",
+      "Toggle ON: Allow members to add custom connectors",
+      "Optionally: add the NetSuite connector here as an organisation-wide connector so all members share it automatically",
     ],
+    badge: "Admin Pre-Requisite",
     note:
-      'Perplexity supports the MCP 2025-06-18 protocol with Streamable HTTP transport and OAuth 2.0 PKCE — fully compatible with NetSuite requirements.',
+      "This toggle is OFF by default in all Perplexity Enterprise tenants. Without enabling it, team members will not see the + Custom connector button in their account settings.",
   },
   {
     id: 7,
-    role: "team",
+    role: "perplexity",
+    phase: "Perplexity Enterprise",
+    title: "Add NetSuite as a Custom Remote Connector",
+    description:
+      "In your Perplexity Enterprise account settings, add the NetSuite sandbox MCP endpoint as a custom remote connector. NetSuite is not a pre-built connector — it must be added manually using the MCP URL from the NetSuite admin.",
+    details: [
+      "Log into app.perplexity.ai with your Enterprise account",
+      "Go to Account Settings → Connectors (or navigate to perplexity.ai/account/connectors)",
+      "Click + Custom connector in the top-right corner",
+      "In the modal pop-up, select Remote (not Local)",
+      "Name: NetSuite Sandbox",
+      "MCP Server URL: paste the URL provided by the NetSuite admin",
+      "Authentication: select OAuth 2.0",
+      "Transport: select Streamable HTTP (not SSE — SSE is the older protocol and will fail)",
+      "Check the acknowledgement box → click Add",
+      "Click the connector card to trigger the OAuth login popup → authenticate with your NetSuite sandbox credentials",
+      "Confirm the connector shows a green Connected status",
+    ],
+    code: "MCP Server URL (MCP Standard Tools SuiteApp):\nhttps://<accountid>.suitetalk.api.netsuite.com/services/mcp/v1/suiteapp/com.netsuite.mcpstandardtools\n\nAlternative — all tools including custom:\nhttps://<accountid>.suitetalk.api.netsuite.com/services/mcp/v1/all\n\nReplace <accountid> with the sandbox account ID\nprovided by the NetSuite admin.",
+    badge: "Key Setup Step",
+    note:
+      "Transport MUST be Streamable HTTP. NetSuite uses the MCP 2025-06-18 protocol which requires Streamable HTTP. Selecting SSE will result in a connection error even if OAuth succeeds.",
+  },
+  {
+    id: 8,
+    role: "perplexity",
     phase: "Perplexity Enterprise",
     title: "Verify Tool Discovery",
     description:
@@ -157,14 +180,14 @@ const steps: Step[] = [
       "Enable the NetSuite connector for the session",
       "Run the first test prompt (see below)",
       "Confirm Perplexity returns a list of tools including SuiteQL query, record read, saved search",
-      'If no tools appear, check with the admin that the /all suffix is in the URL',
+      "If no tools appear, check with the admin that the /all suffix is in the URL",
     ],
-    code: 'Test Prompt 1 — Connectivity:\n"List all available tools from the NetSuite connector and describe what each one does."\n\nExpected: Perplexity returns netsuite_suiteql_query,\nnetsuite_get_record, netsuite_saved_search with descriptions.',
+    code: "Test Prompt 1 — Connectivity:\n\"List all available tools from the NetSuite connector and describe what each one does.\"\n\nExpected: Perplexity returns netsuite_suiteql_query,\nnetsuite_get_record, netsuite_saved_search with descriptions.",
     badge: "Test Call 1",
   },
   {
-    id: 8,
-    role: "team",
+    id: 9,
+    role: "perplexity",
     phase: "Perplexity Enterprise",
     title: "Run Live Financial Data Query",
     description:
@@ -175,12 +198,12 @@ const steps: Step[] = [
       "Check that the data respects the role permissions set by the admin",
       "Note any subsidiaries or cost centres visible — these should match the role's access scope",
     ],
-    code: 'Test Prompt 2 — Data Access:\n"Using NetSuite, show me total revenue by subsidiary\nfor the current financial year to date, in AUD."\n\nExpected: Perplexity calls netsuite_suiteql_query,\nreturns a table of subsidiaries with AUD revenue figures.',
+    code: "Test Prompt 2 — Data Access:\n\"Using NetSuite, show me total revenue by subsidiary\nfor the current financial year to date, in AUD.\"\n\nExpected: Perplexity calls netsuite_suiteql_query,\nreturns a table of subsidiaries with AUD revenue figures.",
     badge: "Test Call 2",
   },
   {
-    id: 9,
-    role: "team",
+    id: 10,
+    role: "perplexity",
     phase: "Perplexity Enterprise",
     title: "Validate Analyst-Grade Reasoning",
     description:
@@ -192,10 +215,10 @@ const steps: Step[] = [
       "Capture the output — this is your CTO demo material",
       "Document any data quality issues or gaps for the admin to address",
     ],
-    code: 'Test Prompt 3 — Reasoning:\n"Compare total operating costs for Q3 FY2025 vs Q3 FY2024\nusing NetSuite data. Identify the top 3 cost categories\nthat increased year-on-year and suggest possible drivers."\n\nExpected: Multi-step reasoning, comparative table,\nnarrative analysis with suggested drivers.',
+    code: "Test Prompt 3 — Reasoning:\n\"Compare total operating costs for Q3 FY2025 vs Q3 FY2024\nusing NetSuite data. Identify the top 3 cost categories\nthat increased year-on-year and suggest possible drivers.\"\n\nExpected: Multi-step reasoning, comparative table,\nnarrative analysis with suggested drivers.",
     badge: "Test Call 3 — CTO Demo",
     note:
-      'This is the money shot. If Perplexity returns a coherent analyst-grade narrative from live NetSuite sandbox data, the PoV is proven and you have a compelling case for production rollout.',
+      "This is the money shot. If Perplexity returns a coherent analyst-grade narrative from live NetSuite sandbox data, the PoV is proven and you have a compelling case for production rollout.",
   },
 ];
 
@@ -204,7 +227,7 @@ const roleFilters: { value: Role; label: string; icon: ReactNode; desc: string }
     value: "all",
     label: "Full Setup Guide",
     icon: <Layers className="w-4 h-4" />,
-    desc: "All steps for both teams",
+    desc: "All steps end-to-end",
   },
   {
     value: "admin",
@@ -213,10 +236,16 @@ const roleFilters: { value: Role; label: string; icon: ReactNode; desc: string }
     desc: "Sandbox plumbing & OAuth",
   },
   {
+    value: "perplexity",
+    label: "Perplexity Setup",
+    icon: <Plug className="w-4 h-4" />,
+    desc: "Connector & test calls",
+  },
+  {
     value: "team",
     label: "AI & Automation Team",
     icon: <Users className="w-4 h-4" />,
-    desc: "Perplexity connector & test calls",
+    desc: "Full team view",
   },
 ];
 
@@ -225,9 +254,18 @@ const phaseColors: Record<string, string> = {
   "Perplexity Enterprise": "bg-indigo-100 text-indigo-800",
 };
 
+const roleColorMap: Record<string, { num: string; badge: string; label: string }> = {
+  admin: { num: "bg-[#003087] text-white", badge: "bg-blue-50 text-blue-700", label: "NetSuite Admin" },
+  perplexity: { num: "bg-indigo-600 text-white", badge: "bg-indigo-50 text-indigo-700", label: "Perplexity Setup" },
+  team: { num: "bg-indigo-600 text-white", badge: "bg-indigo-50 text-indigo-700", label: "AI & Automation Team" },
+  both: { num: "bg-slate-700 text-white", badge: "bg-slate-100 text-slate-700", label: "Both Teams" },
+};
+
 const badgeColors: Record<string, string> = {
   "Free — No Licensing Cost": "bg-emerald-100 text-emerald-800",
   "Handover Point": "bg-amber-100 text-amber-800",
+  "Admin Pre-Requisite": "bg-orange-100 text-orange-800",
+  "Key Setup Step": "bg-cyan-100 text-cyan-800",
   "Test Call 1": "bg-violet-100 text-violet-800",
   "Test Call 2": "bg-violet-100 text-violet-800",
   "Test Call 3 — CTO Demo": "bg-rose-100 text-rose-800",
@@ -237,9 +275,11 @@ export default function FoundationSetup() {
   const [activeRole, setActiveRole] = useState<Role>("all");
   const [expandedStep, setExpandedStep] = useState<number | null>(null);
 
-  const filteredSteps = steps.filter(
-    (s) => activeRole === "all" || s.role === activeRole || s.role === "both"
-  );
+  const filteredSteps = steps.filter((s) => {
+    if (activeRole === "all") return true;
+    if (activeRole === "team") return s.role === "team" || s.role === "perplexity" || s.role === "both";
+    return s.role === activeRole || s.role === "both";
+  });
 
   return (
     <section id="foundation" className="py-24 bg-white relative overflow-hidden">
@@ -273,8 +313,8 @@ export default function FoundationSetup() {
               <p className="mt-4 text-lg text-slate-600 max-w-2xl leading-relaxed">
                 Before Perplexity Computer can interrogate NetSuite data, two teams need to
                 establish the plumbing. NetSuite admins configure the sandbox and OAuth layer.
-                The AI & Automation Team connects the Perplexity Enterprise tenant and validates the stack
-                with three test calls.
+                The AI & Automation Team connects the Perplexity Enterprise tenant and validates
+                the stack with three test calls.
               </p>
             </div>
             {/* Cost callout */}
@@ -295,7 +335,10 @@ export default function FoundationSetup() {
           {roleFilters.map((filter) => (
             <button
               key={filter.value}
-              onClick={() => setActiveRole(filter.value)}
+              onClick={() => {
+                setActiveRole(filter.value);
+                setExpandedStep(null);
+              }}
               className={`flex items-center gap-2.5 px-5 py-3 rounded-xl border-2 text-sm font-semibold transition-all duration-200 ${
                 activeRole === filter.value
                   ? "bg-[#003087] border-[#003087] text-white shadow-lg shadow-blue-900/20"
@@ -329,7 +372,7 @@ export default function FoundationSetup() {
           >
             {filteredSteps.map((step, idx) => {
               const isExpanded = expandedStep === step.id;
-              const isAdmin = step.role === "admin";
+              const roleStyle = roleColorMap[step.role] || roleColorMap.both;
 
               return (
                 <motion.div
@@ -349,13 +392,7 @@ export default function FoundationSetup() {
                     className="w-full text-left px-6 py-5 flex items-start gap-5 bg-white hover:bg-slate-50/50 transition-colors"
                   >
                     {/* Step number */}
-                    <div
-                      className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${
-                        isAdmin
-                          ? "bg-[#003087] text-white"
-                          : "bg-indigo-600 text-white"
-                      }`}
-                    >
+                    <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${roleStyle.num}`}>
                       {step.id}
                     </div>
 
@@ -368,14 +405,8 @@ export default function FoundationSetup() {
                           {step.phase}
                         </span>
                         {/* Role badge */}
-                        <span
-                          className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${
-                            isAdmin
-                              ? "bg-blue-50 text-blue-700"
-                              : "bg-indigo-50 text-indigo-700"
-                          }`}
-                        >
-                          {isAdmin ? "NetSuite Admin" : "AI & Automation Team"}
+                        <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${roleStyle.badge}`}>
+                          {roleStyle.label}
                         </span>
                         {/* Special badge */}
                         {step.badge && (
@@ -486,7 +517,7 @@ export default function FoundationSetup() {
             </p>
           </div>
           <div className="flex-shrink-0 flex items-center gap-2 bg-white/10 border border-white/20 rounded-xl px-4 py-3">
-            <Plug className="w-4 h-4 text-white" />
+            <Zap className="w-4 h-4 text-white" />
             <span className="text-white text-sm font-semibold">Zero Production Risk</span>
           </div>
         </div>
