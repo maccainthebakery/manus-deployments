@@ -2,7 +2,9 @@
  * FoundationSetup.tsx
  * Design: Executive Command Centre — NRMA deep blue (#003087) on white
  * Role-filtered step-by-step guide for NetSuite admins, Perplexity setup,
- * and AI & Automation Team to establish the MCP plumbing before Perplexity integration
+ * and AI & Automation Team.
+ * Updated May 2026: Both Claude Desktop and Perplexity validated on off-the-shelf
+ * NetSuite MCP adaptor (read-only). Write actions require custom MCP extension.
  */
 
 import { useState, type ReactNode } from "react";
@@ -42,7 +44,7 @@ const steps: Step[] = [
     phase: "NetSuite Sandbox",
     title: "Install the MCP Standard Tools SuiteApp",
     description:
-      "Deploy Oracle's free MCP Standard Tools SuiteApp into your NetSuite sandbox account. This exposes the pre-built tools for SuiteQL queries, record reads, saved searches, and reports — no custom development required.",
+      "Deploy Oracle's free MCP Standard Tools SuiteApp into your NetSuite sandbox account. This is the off-the-shelf adaptor validated with both Claude Desktop and Perplexity Computer — no custom development required. Note: this adaptor is read-only.",
     details: [
       "Log into your NetSuite sandbox account (not production)",
       "Navigate to SuiteApp Marketplace (Customisation > SuiteApp Marketplace)",
@@ -52,7 +54,7 @@ const steps: Step[] = [
     ],
     badge: "Free — No Licensing Cost",
     note:
-      "The AI Connector Service is not a paid feature. Oracle confirmed: NetSuite AI Connector Service is not a paid feature. MCP Standard Tools is a free SuiteApp.",
+      "The AI Connector Service is not a paid feature. Oracle confirmed: NetSuite AI Connector Service is not a paid feature. MCP Standard Tools is a free SuiteApp. The off-the-shelf adaptor provides read-only access. Write actions (create, update, delete records) require a separate custom MCP extension — a planned next step.",
   },
   {
     id: 2,
@@ -95,13 +97,13 @@ const steps: Step[] = [
     phase: "NetSuite Sandbox",
     title: "Create the OAuth 2.0 Integration Record",
     description:
-      "Register Perplexity as an authorised OAuth 2.0 client in NetSuite. This generates the Client ID and Client Secret needed for the Perplexity connector setup.",
+      "Register your AI clients (Claude Desktop and Perplexity) as authorised OAuth 2.0 clients in NetSuite. This generates the Client ID and Client Secret needed for each AI client's connector setup.",
     details: [
       "Go to Setup → Integration → Manage Integrations → New",
-      "Name: Perplexity AI Connector — Sandbox",
+      "Name: AI Clients MCP Connector — Sandbox (covers both Claude Desktop and Perplexity)",
       "Enable: Authorization Code Grant with PKCE",
       "Set Token-Based Authentication: Enabled",
-      "Redirect URI: https://www.perplexity.ai/oauth/callback (confirm with AI & Automation Team)",
+      "Redirect URI: for Perplexity — https://www.perplexity.ai/oauth/callback; for Claude Desktop — confirm with AI & Automation Team",
       "Save and note the Client ID and Client Secret — share securely with AI & Automation Team",
     ],
     code: "MCP Server URL format:\nhttps://<sandboxaccountid>.suitetalk.api.netsuite.com/services/mcp/v1/all\n\nReplace <sandboxaccountid> with your sandbox account ID\n(found in Setup → Company → Company Information)",
@@ -149,7 +151,7 @@ const steps: Step[] = [
     phase: "Perplexity Enterprise",
     title: "Add NetSuite as a Custom Remote Connector",
     description:
-      "In your Perplexity Enterprise account settings, add the NetSuite sandbox MCP endpoint as a custom remote connector. NetSuite is not a pre-built connector — it must be added manually using the MCP URL from the NetSuite admin.",
+      "In your Perplexity Enterprise account settings, add the NetSuite sandbox MCP endpoint as a custom remote connector. Claude Desktop uses claude_desktop_config.json (different path). Both have been validated against the off-the-shelf NetSuite MCP adaptor (read-only).",
     details: [
       "Log into app.perplexity.ai with your Enterprise account",
       "Go to Account Settings → Connectors (or navigate to perplexity.ai/account/connectors)",
@@ -166,7 +168,7 @@ const steps: Step[] = [
     code: "MCP Server URL (MCP Standard Tools SuiteApp):\nhttps://<accountid>.suitetalk.api.netsuite.com/services/mcp/v1/suiteapp/com.netsuite.mcpstandardtools\n\nAlternative — all tools including custom:\nhttps://<accountid>.suitetalk.api.netsuite.com/services/mcp/v1/all\n\nReplace <accountid> with the sandbox account ID\nprovided by the NetSuite admin.",
     badge: "Key Setup Step",
     note:
-      "Transport MUST be Streamable HTTP. NetSuite uses the MCP 2025-06-18 protocol which requires Streamable HTTP. Selecting SSE will result in a connection error even if OAuth succeeds.",
+      "Transport MUST be Streamable HTTP for Perplexity. NetSuite uses the MCP 2025-06-18 protocol which requires Streamable HTTP. Selecting SSE will result in a connection error even if OAuth succeeds. Claude Desktop uses claude_desktop_config.json — see Anthropic docs for the exact JSON format.",
   },
   {
     id: 8,
@@ -174,16 +176,17 @@ const steps: Step[] = [
     phase: "Perplexity Enterprise",
     title: "Verify Tool Discovery",
     description:
-      "Confirm Perplexity can see and describe all available NetSuite MCP tools. This is the first validation that the full stack is working end-to-end.",
+      "Confirm both AI clients can see and describe all available NetSuite MCP tools. Both Claude Desktop and Perplexity have been validated on this step — the off-the-shelf adaptor works with both.",
     details: [
-      "Open a new Perplexity Computer session",
+      "Open a new Perplexity Computer session (or Claude Desktop)",
       "Enable the NetSuite connector for the session",
       "Run the first test prompt (see below)",
-      "Confirm Perplexity returns a list of tools including SuiteQL query, record read, saved search",
+      "Confirm the AI client returns a list of tools including SuiteQL query, record read, saved search",
       "If no tools appear, check with the admin that the /all suffix is in the URL",
+      "Repeat in the other AI client to confirm both are working",
     ],
-    code: "Test Prompt 1 — Connectivity:\n\"List all available tools from the NetSuite connector and describe what each one does.\"\n\nExpected: Perplexity returns netsuite_suiteql_query,\nnetsuite_get_record, netsuite_saved_search with descriptions.",
-    badge: "Test Call 1",
+    code: "Test Prompt 1 — Connectivity (validated in both Claude Desktop and Perplexity):\n\"List all available tools from the NetSuite connector and describe what each one does.\"\n\nExpected: Returns netsuite_suiteql_query,\nnetsuite_get_record, netsuite_saved_search with descriptions.\n\nStatus: VALIDATED ✓ — both AI clients confirmed.",
+    badge: "Test Call 1 — Validated ✓",
   },
   {
     id: 9,
@@ -191,14 +194,14 @@ const steps: Step[] = [
     phase: "Perplexity Enterprise",
     title: "Run Live Financial Data Query",
     description:
-      "Validate that SuiteQL executes correctly and returns live sandbox financial data. This confirms role-based security is working and data is flowing through the MCP layer.",
+      "Validate that SuiteQL executes correctly and returns live sandbox financial data. This confirms role-based security is working and data is flowing through the MCP layer. Note: the off-the-shelf adaptor is read-only — this test confirms read access only.",
     details: [
       "Run the second test prompt in a Perplexity Computer session",
       "Confirm the response includes actual data from the sandbox (not a hallucination)",
       "Check that the data respects the role permissions set by the admin",
       "Note any subsidiaries or cost centres visible — these should match the role's access scope",
     ],
-    code: "Test Prompt 2 — Data Access:\n\"Using NetSuite, show me total revenue by subsidiary\nfor the current financial year to date, in AUD.\"\n\nExpected: Perplexity calls netsuite_suiteql_query,\nreturns a table of subsidiaries with AUD revenue figures.",
+    code: "Test Prompt 2 — Data Access (read-only — works in both AI clients):\n\"Using NetSuite, show me total revenue by subsidiary\nfor the current financial year to date, in AUD.\"\n\nExpected: Calls netsuite_suiteql_query,\nreturns a table of subsidiaries with AUD revenue figures.\n\nNote: Read-only. Write actions require a custom MCP extension.",
     badge: "Test Call 2",
   },
   {
@@ -207,10 +210,10 @@ const steps: Step[] = [
     phase: "Perplexity Enterprise",
     title: "Validate Analyst-Grade Reasoning",
     description:
-      "The final validation test confirms Perplexity can orchestrate multiple sequential MCP calls, synthesise the results, and produce a financial analyst-style narrative — not just a data dump.",
+      "The final validation test confirms both AI clients can orchestrate multiple sequential MCP calls, synthesise the results, and produce a financial analyst-style narrative. Both Claude Desktop and Perplexity have demonstrated this capability on live sandbox data.",
     details: [
-      "Run the third test prompt in a Perplexity Computer session",
-      "Confirm Perplexity makes multiple tool calls (visible in the reasoning trace)",
+      "Run the third test prompt in a Perplexity Computer or Claude Desktop session",
+      "Confirm the AI client makes multiple tool calls (visible in the reasoning/thinking trace)",
       "Confirm the output includes a narrative explanation, not just raw numbers",
       "Capture the output — this is your CTO demo material",
       "Document any data quality issues or gaps for the admin to address",
@@ -218,7 +221,7 @@ const steps: Step[] = [
     code: "Test Prompt 3 — Reasoning:\n\"Compare total operating costs for Q3 FY2025 vs Q3 FY2024\nusing NetSuite data. Identify the top 3 cost categories\nthat increased year-on-year and suggest possible drivers.\"\n\nExpected: Multi-step reasoning, comparative table,\nnarrative analysis with suggested drivers.",
     badge: "Test Call 3 — CTO Demo",
     note:
-      "This is the money shot. If Perplexity returns a coherent analyst-grade narrative from live NetSuite sandbox data, the PoV is proven and you have a compelling case for production rollout.",
+      "Both Claude Desktop and Perplexity can produce analyst-grade narratives from live NetSuite sandbox data via the off-the-shelf MCP adaptor. The PoV is proven for read access. The next milestone is extending to write actions via a custom MCP extension.",
   },
 ];
 
@@ -310,20 +313,20 @@ export default function FoundationSetup() {
               >
                 Foundation Setup
               </h2>
-              <p className="mt-4 text-lg text-slate-600 max-w-2xl leading-relaxed">
-                Before Perplexity Computer can interrogate NetSuite data, two teams need to
-                establish the plumbing. NetSuite admins configure the sandbox and OAuth layer.
-                The AI & Automation Team connects the Perplexity Enterprise tenant and validates
-                the stack with three test calls.
-              </p>
+        <p className="mt-4 text-lg text-slate-600 max-w-2xl leading-relaxed">
+          Both Claude Desktop and Perplexity Computer are now validated on the off-the-shelf
+          NetSuite MCP adaptor (read-only). This guide documents the setup path and the three
+          validation test calls that confirmed end-to-end connectivity. Next step: custom MCP
+          extension for write actions.
+        </p>
             </div>
             {/* Cost callout */}
             <div className="flex-shrink-0 bg-emerald-50 border border-emerald-200 rounded-xl px-6 py-4 flex items-center gap-3">
               <ShieldCheck className="w-6 h-6 text-emerald-600 flex-shrink-0" />
               <div>
-                <p className="text-sm font-semibold text-emerald-800">Zero Additional Cost</p>
+                <p className="text-sm font-semibold text-emerald-800">Both AI Clients Validated ✓</p>
                 <p className="text-xs text-emerald-700 mt-0.5">
-                  NetSuite MCP is free. Perplexity Enterprise covers the AI layer.
+                  Claude Desktop + Perplexity on NetSuite MCP. Read-only confirmed.
                 </p>
               </div>
             </div>

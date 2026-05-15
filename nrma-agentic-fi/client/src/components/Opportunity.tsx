@@ -11,7 +11,7 @@ const pillars = [
   {
     icon: Brain,
     title: "LLM-Agnostic Reasoning",
-    body: "Perplexity Computer routes queries to the best available model — Claude, GPT-4o, Sonar — without lock-in. Your investment is in the architecture, not a single vendor.",
+    body: "Both Claude Desktop and Perplexity Computer are validated on the off-the-shelf NetSuite MCP adaptor. The architecture is LLM-agnostic — routes to Claude, GPT-4o, or Sonar. Your investment is in the architecture, not a single vendor.",
   },
   {
     icon: Database,

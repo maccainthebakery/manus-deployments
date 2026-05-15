@@ -21,30 +21,30 @@ function useInView(threshold = 0.1) {
 const layers = [
   {
     tier: "Layer 1",
-    title: "Agentic Layer",
-    tool: "Perplexity Computer for Enterprise",
+    title: "AI Clients — Validated",
+    tool: "Perplexity Computer + Claude Desktop",
     description:
-      "The central reasoning engine. LLM-agnostic — routes to Claude, GPT-4o, or Sonar depending on query type. Orchestrates all downstream semantic layers via MCP and REST.",
+      "Both Perplexity Computer and Claude Desktop are validated. Acts as a smart router: real-time operational queries (last 24h, invoice lookups, live GL) are routed to NetSuite MCP; analytical and historical queries (trends, forecasts, cross-system) are routed to BigQuery. Hybrid queries hit both and merge in reasoning. LLM-agnostic — Claude, GPT-4o, or Sonar.",
     color: "#003087",
-    tags: ["Perplexity Computer", "MCP Protocol", "LLM Agnostic", "Shortcut.ai"],
+    tags: ["Perplexity Computer", "Claude Desktop", "MCP Protocol", "LLM Agnostic"],
   },
   {
     tier: "Layer 2A",
-    title: "Data Lake Semantic Layer",
-    tool: "Looker or Cube.dev → Google BigQuery",
+    title: "BigQuery Semantic Layer — Trial",
+    tool: "Cube.dev (trial) vs BigQuery Native Semantic",
     description:
-      "Purpose-built semantic layer defining business metrics, dimensions, and KPIs before data reaches the agentic layer. Translates raw data into business concepts like 'occupancy rate' or 'revenue per unit'.",
+      "Cube.dev trial is active as a governed semantic layer with native MCP endpoint. Claude Desktop is currently connected to BigQuery's inbuilt semantic layer. Evaluating both for governance, performance, and MCP compatibility before committing.",
     color: "#0055D4",
-    tags: ["Looker", "Cube.dev", "Google BigQuery", "Metrics Layer"],
+    tags: ["Cube.dev Trial", "BigQuery Native", "Google BigQuery", "Semantic Layer"],
   },
   {
     tier: "Layer 2B",
-    title: "ERP Semantic Layer",
-    tool: "n8n → NetSuite · Oracle GFS · Newbook",
+    title: "ERP Connector Layer",
+    tool: "NetSuite MCP (off-the-shelf) + n8n",
     description:
-      "n8n acts strictly as the API abstraction layer for non-Microsoft ERPs only. Normalises the complex REST/SOAP interfaces of NetSuite, Oracle GFS, and Newbook into clean, queryable endpoints.",
+      "Off-the-shelf NetSuite MCP adaptor validated — read-only. Write actions require a custom MCP extension. n8n remains the connector layer for Oracle GFS and Newbook where no native MCP adaptor exists.",
     color: "#0078D4",
-    tags: ["n8n", "Oracle NetSuite", "Oracle GFS", "Newbook PMS"],
+    tags: ["NetSuite MCP", "n8n", "Oracle GFS", "Newbook PMS", "Read-Only"],
   },
   {
     tier: "Layer 2C",
@@ -130,30 +130,30 @@ export default function Architecture() {
                 border: "1px solid var(--nrma-light)",
               }}
             >
-              v1.0 · April 2026
+              v1.1 · May 2026
             </div>
           </div>
 
           <ArchDiagram />
         </div>
 
-        {/* Why Perplexity + Layer cards */}
+        {/* AI Clients + Layer cards */}
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* Why Perplexity callout */}
+          {/* AI Clients callout */}
           <div
             className={`rounded-xl p-6 lg:col-span-1 transition-all duration-500 delay-200 ${
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
             style={{ background: "var(--nrma-navy)" }}
           >
-            <div className="mono-label text-white/60 mb-3">Why Perplexity Computer?</div>
+            <div className="mono-label text-white/60 mb-3">Integration Status — May 2026</div>
             <ul className="space-y-3">
               {[
-                "LLM-agnostic — routes to the best model per query",
-                "Built-in web search + document grounding",
-                "Enterprise data connectors via MCP",
-                "CTO already onboarded on Perplexity Enterprise",
-                "No single-vendor lock-in",
+                "Claude Desktop + Perplexity both validated ✓",
+                "NetSuite MCP adaptor: off-the-shelf, read-only ✓",
+                "Cube.dev trial active — semantic layer evaluation",
+                "Claude Desktop → BigQuery native semantic layer ✓",
+                "Write actions: custom MCP extension required",
               ].map((point) => (
                 <li key={point} className="flex items-start gap-2 text-sm text-white/80">
                   <span style={{ color: "var(--nrma-cyan)" }} className="mt-0.5 shrink-0">→</span>

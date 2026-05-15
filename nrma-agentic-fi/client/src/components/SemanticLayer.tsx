@@ -2,11 +2,12 @@
  * SemanticLayer.tsx
  * Design: Executive Command Centre — NRMA deep blue (#003087) on white
  * Fonts: Playfair Display (headings) / DM Sans (body)
- * Purpose: Compare Cube.dev vs Rhombus AI as complementary layers in the BigQuery → Perplexity architecture
+ * Purpose: Compare Cube.dev vs BigQuery native semantic layer — active trial, May 2026
+ * Rhombus AI removed — not in scope for current evaluation
  */
 
 import { motion, type Transition } from "framer-motion";
-import { CheckCircle2, XCircle, AlertCircle, Layers, Zap, Database, ArrowDown, ArrowRight } from "lucide-react";
+import { CheckCircle2, XCircle, AlertCircle, Layers, Zap, Database, ArrowDown, ArrowRight, FlaskConical } from "lucide-react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -22,49 +23,49 @@ type Status = "yes" | "no" | "partial";
 interface CompareRow {
   dimension: string;
   cube: { status: Status; note: string };
-  rhombus: { status: Status; note: string };
+  native: { status: Status; note: string };
 }
 
 const compareRows: CompareRow[] = [
   {
     dimension: "Native MCP Server",
-    cube: { status: "yes", note: "Remote HTTPS endpoint, OAuth 2.0 PKCE — connects directly to Perplexity" },
-    rhombus: { status: "no", note: "No MCP server documented; requires REST wrapper to reach Perplexity" },
-  },
-  {
-    dimension: "BigQuery Integration",
-    cube: { status: "yes", note: "First-class native connector, production-grade with pre-aggregations" },
-    rhombus: { status: "yes", note: "Data connection available; AI-assisted pipeline building on BigQuery tables" },
+    cube: { status: "yes", note: "Remote HTTPS endpoint, OAuth 2.0 PKCE — connects directly to Claude Desktop and Perplexity" },
+    native: { status: "partial", note: "Accessible via BigQuery API; Claude Desktop connected directly via Google MCP. No dedicated MCP endpoint for Perplexity yet." },
   },
   {
     dimension: "Governed Metric Definitions",
-    cube: { status: "yes", note: "YAML/JS data model — one definition of revenue, occupancy, cost applied everywhere" },
-    rhombus: { status: "no", note: "No persistent metric definitions; each prompt re-derives logic from raw data" },
+    cube: { status: "yes", note: "YAML/JS data model — one definition of revenue, occupancy, cost applied everywhere, version-controlled" },
+    native: { status: "partial", note: "Looker-native LookML models provide some governance; ad-hoc queries bypass definitions" },
   },
   {
     dimension: "Row / Column-Level Security",
     cube: { status: "yes", note: "Built-in access policies — role, user, and tenant level" },
-    rhombus: { status: "partial", note: "Project-level access only; fine-grained governance not documented" },
+    native: { status: "partial", note: "BigQuery IAM and column-level security available but requires separate configuration per query path" },
   },
   {
     dimension: "Query Caching & Performance",
     cube: { status: "yes", note: "Cube Store pre-aggregations — sub-second responses on large BigQuery datasets" },
-    rhombus: { status: "no", note: "Queries run fresh each time; no caching layer" },
+    native: { status: "no", note: "Queries run against BigQuery directly; slot consumption and latency depend on dataset size" },
   },
   {
-    dimension: "AI-Assisted Data Transformation",
-    cube: { status: "partial", note: "Cube D3 AI agents assist with model building, not raw transformation" },
-    rhombus: { status: "yes", note: "Core capability — Rhombo AI generates transformation pipelines from prompts" },
+    dimension: "AI Client Compatibility",
+    cube: { status: "yes", note: "MCP endpoint compatible with both Claude Desktop and Perplexity Computer" },
+    native: { status: "partial", note: "Claude Desktop validated ✓. Perplexity connectivity to BigQuery native layer not yet confirmed." },
+  },
+  {
+    dimension: "Setup Complexity",
+    cube: { status: "partial", note: "Requires data model build effort; YAML schema definition before queries work well" },
+    native: { status: "yes", note: "Zero additional setup — Claude Desktop connects directly via Google's BigQuery MCP. Already working." },
+  },
+  {
+    dimension: "Cost",
+    cube: { status: "partial", note: "Free tier (dev only); MCP requires Premium+ plan — CCU-based pricing, contact sales" },
+    native: { status: "yes", note: "No additional cost beyond existing BigQuery usage. Already included in Google Cloud spend." },
   },
   {
     dimension: "Open Source / Self-Hosted Option",
     cube: { status: "yes", note: "Cube Core is fully open source and self-hostable" },
-    rhombus: { status: "no", note: "SaaS-only; no self-hosted option" },
-  },
-  {
-    dimension: "Pricing Entry Point",
-    cube: { status: "partial", note: "Free tier (dev only); MCP requires Premium+ (CCU-based, contact sales)" },
-    rhombus: { status: "yes", note: "Free tier available; paid plans from $29/month — significantly lower entry cost" },
+    native: { status: "no", note: "Google Cloud managed service only; no self-hosted option" },
   },
 ];
 
@@ -83,29 +84,29 @@ const archSteps = [
     iconColor: "text-slate-500",
   },
   {
-    icon: Zap,
-    label: "Rhombus AI",
-    sublabel: "AI-assisted transformation",
-    badge: "Optional",
+    icon: FlaskConical,
+    label: "Semantic Layer (Trial Decision)",
+    sublabel: "Cube.dev vs BigQuery native — evaluating now",
+    badge: "Trial Active",
     badgeColor: "bg-amber-100 text-amber-700",
     color: "bg-amber-50 border-amber-300 text-amber-800",
     iconColor: "text-amber-500",
   },
   {
     icon: Layers,
-    label: "Cube.dev",
-    sublabel: "Semantic layer + MCP endpoint",
-    badge: "Required",
+    label: "MCP Endpoint",
+    sublabel: "Cube.dev MCP (trial) or BigQuery MCP (Claude validated)",
+    badge: "Key Decision",
     badgeColor: "bg-blue-100 text-[#003087]",
     color: "bg-blue-50 border-[#003087]/30 text-[#003087]",
     iconColor: "text-[#003087]",
   },
   {
     icon: ArrowRight,
-    label: "Perplexity Computer",
-    sublabel: "Agentic financial intelligence",
-    badge: "Core",
-    badgeColor: "bg-[#003087] text-white",
+    label: "Claude Desktop + Perplexity Computer",
+    sublabel: "Both AI clients validated on NetSuite MCP",
+    badge: "Validated ✓",
+    badgeColor: "bg-emerald-100 text-emerald-800",
     color: "bg-[#003087] border-[#003087] text-white",
     iconColor: "text-white",
   },
@@ -125,14 +126,22 @@ export default function SemanticLayer() {
           custom={0}
         >
           <span className="inline-block text-xs font-semibold tracking-widest uppercase text-[#003087] bg-blue-50 border border-blue-200 rounded-full px-4 py-1.5 mb-4">
-            BigQuery Semantic Layer
+            BigQuery Semantic Layer — Trial
           </span>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-[#003087] leading-tight mb-4">
-            Cube.dev vs Rhombus AI
+            Cube.dev vs BigQuery Native
           </h2>
           <p className="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">
-            Two tools, two distinct roles. Understanding where each fits in the architecture is the key decision before connecting BigQuery to Perplexity Computer.
+            Cube.dev trial is now active. Claude Desktop is already connected to BigQuery's inbuilt semantic layer. The key question: does the governance and MCP compatibility of Cube.dev justify the additional layer?
           </p>
+          {/* Live status pill */}
+          <div className="flex justify-center mt-6">
+            <div className="flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-xl px-5 py-3">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-sm font-semibold text-emerald-800">Trial in progress — May 2026</span>
+              <span className="text-sm text-emerald-700">Claude Desktop → BigQuery native ✓ &nbsp;|&nbsp; Cube.dev trial active</span>
+            </div>
+          </div>
         </motion.div>
 
         {/* Architecture Flow */}
@@ -145,11 +154,11 @@ export default function SemanticLayer() {
           custom={1}
         >
           <h3 className="text-center text-sm font-semibold tracking-widest uppercase text-slate-400 mb-8">
-            Where Each Tool Sits in the Stack
+            Where the Decision Sits in the Stack
           </h3>
           <div className="flex flex-col items-center gap-0">
             {archSteps.map((step, i) => (
-              <div key={step.label} className="flex flex-col items-center w-full max-w-md">
+              <div key={step.label} className="flex flex-col items-center w-full max-w-lg">
                 <div className={`w-full border-2 rounded-xl px-6 py-4 flex items-center gap-4 shadow-sm ${step.color}`}>
                   <step.icon className={`w-6 h-6 flex-shrink-0 ${step.iconColor}`} />
                   <div className="flex-1 min-w-0">
@@ -173,7 +182,7 @@ export default function SemanticLayer() {
             ))}
           </div>
           <p className="text-center text-sm text-slate-500 mt-6 max-w-lg mx-auto">
-            Rhombus AI is <strong>optional</strong> — it accelerates data preparation. Cube.dev is <strong>required</strong> — it is the only tool with a native MCP endpoint for Perplexity.
+            The semantic layer decision determines whether both AI clients can connect consistently, with governed metrics and security, or whether each client queries BigQuery independently.
           </p>
         </motion.div>
 
@@ -182,27 +191,27 @@ export default function SemanticLayer() {
           {[
             {
               name: "Cube.dev",
-              role: "Semantic Layer",
-              tagline: "The MCP bridge between BigQuery and Perplexity",
+              role: "Governed Semantic Layer",
+              tagline: "Centralised metric definitions + native MCP endpoint",
               description:
-                "Cube defines business metrics once — revenue, occupancy rate, cost per unit — in a version-controlled data model, then exposes them via a native MCP endpoint. Perplexity connects directly, querying governed, consistent numbers rather than raw SQL. It also adds row-level security, caching, and pre-aggregations on top of BigQuery.",
-              verdict: "Required for Perplexity MCP connectivity",
-              verdictColor: "bg-blue-50 text-[#003087] border-blue-200",
+                "Cube defines business metrics once — revenue, occupancy rate, cost per unit — in a version-controlled data model, then exposes them via a native MCP endpoint. Both Claude Desktop and Perplexity can connect to the same governed definitions. Adds row-level security, caching, and pre-aggregations on top of BigQuery. Trial is currently active.",
+              verdict: "Trial active — evaluating MCP compatibility and governance value",
+              verdictColor: "bg-amber-50 text-amber-800 border-amber-200",
               headerColor: "bg-[#003087] text-white",
-              pros: ["Native MCP server (Premium+)", "Governed metric definitions", "Row/column-level security", "Pre-aggregation caching", "Open source (Cube Core)"],
-              cons: ["MCP requires Premium plan (paid)", "Requires data model build effort", "CCU-based pricing — contact sales"],
+              pros: ["Native MCP server (Premium+)", "Governed metric definitions", "Row/column-level security", "Pre-aggregation caching", "Open source (Cube Core)", "Both AI clients can connect"],
+              cons: ["MCP requires Premium plan (paid)", "Requires data model build effort", "CCU-based pricing — contact sales", "Additional layer to maintain"],
             },
             {
-              name: "Rhombus AI",
-              role: "AI-Native Transformation",
-              tagline: "AI-assisted pipeline building on raw BigQuery data",
+              name: "BigQuery Native Semantic",
+              role: "Inbuilt Semantic Layer",
+              tagline: "Claude Desktop already connected — zero additional setup",
               description:
-                "Rhombus uses its Rhombo AI assistant to generate transformation pipelines, clean raw data, and produce analysis-ready datasets from natural language prompts. It is best positioned as a data engineering productivity tool — replacing manual dbt/SQL work — rather than as the governed semantic layer that Perplexity queries.",
-              verdict: "Optional — strong fit for data preparation",
-              verdictColor: "bg-amber-50 text-amber-800 border-amber-200",
-              headerColor: "bg-amber-500 text-white",
-              pros: ["AI-assisted pipeline building", "Low entry cost ($0–$99/mo)", "Natural language transformation", "Fast iteration on raw data"],
-              cons: ["No MCP server", "No persistent metric governance", "No query caching layer", "Cannot connect directly to Perplexity"],
+                "BigQuery's inbuilt semantic layer (BI Engine / Looker-native LookML) is already working with Claude Desktop via Google's BigQuery MCP. No additional infrastructure, no additional cost. The trade-off is less formal metric governance and uncertainty around Perplexity connectivity — Claude Desktop is the validated client today.",
+              verdict: "Claude Desktop validated ✓ — Perplexity connectivity TBC",
+              verdictColor: "bg-blue-50 text-[#003087] border-blue-200",
+              headerColor: "bg-slate-700 text-white",
+              pros: ["Zero additional cost", "Already working with Claude Desktop", "No setup overhead", "No additional infrastructure", "Google-managed reliability"],
+              cons: ["Less formal metric governance", "Perplexity connectivity not yet confirmed", "No query caching layer", "Ad-hoc queries bypass metric definitions"],
             },
           ].map((tool, i) => (
             <motion.div
@@ -274,8 +283,8 @@ export default function SemanticLayer() {
               <thead>
                 <tr className="bg-[#003087] text-white">
                   <th className="text-left px-5 py-4 font-semibold w-1/3">Dimension</th>
-                  <th className="text-left px-5 py-4 font-semibold w-1/3">Cube.dev</th>
-                  <th className="text-left px-5 py-4 font-semibold w-1/3">Rhombus AI</th>
+                  <th className="text-left px-5 py-4 font-semibold w-1/3">Cube.dev (Trial)</th>
+                  <th className="text-left px-5 py-4 font-semibold w-1/3">BigQuery Native Semantic</th>
                 </tr>
               </thead>
               <tbody>
@@ -293,8 +302,8 @@ export default function SemanticLayer() {
                     </td>
                     <td className="px-5 py-4 align-top">
                       <div className="flex items-start gap-2">
-                        <StatusIcon status={row.rhombus.status} />
-                        <span className="text-slate-600 leading-snug">{row.rhombus.note}</span>
+                        <StatusIcon status={row.native.status} />
+                        <span className="text-slate-600 leading-snug">{row.native.note}</span>
                       </div>
                     </td>
                   </tr>
@@ -318,9 +327,9 @@ export default function SemanticLayer() {
           custom={5}
           className="rounded-2xl bg-[#003087] text-white p-8 text-center"
         >
-          <h3 className="font-display text-2xl font-bold mb-3">The Recommended Approach</h3>
+          <h3 className="font-display text-2xl font-bold mb-3">The Trial Decision</h3>
           <p className="text-blue-100 max-w-2xl mx-auto leading-relaxed mb-6">
-            Use <strong className="text-white">Cube.dev</strong> as the governed semantic layer and MCP endpoint for Perplexity Computer. Optionally layer in <strong className="text-white">Rhombus AI</strong> upstream to accelerate BigQuery data preparation and transformation — the two tools are complementary, not competing.
+            The semantic layer decision only affects the analytical channel. Real-time operational queries (invoice lookups, live GL, last 24h transactions) always route to NetSuite MCP regardless of which semantic layer wins. If Cube.dev confirms MCP compatibility and manageable governance overhead, it becomes the single analytical semantic layer for both AI clients. If BigQuery native proves sufficient, the simpler zero-cost path wins.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a

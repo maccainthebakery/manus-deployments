@@ -62,9 +62,19 @@ const cases = [
     unit: "Energy Backbone",
     question: "How are our energy costs trending across all sites, and what is the impact on our operating margin?",
     answer:
-      "Energy costs across all NRMA sites are up 11.2% YTD versus prior year, driven by grid tariff increases. Parks sites account for 68% of total energy spend. Operating margin impact is -0.8pp group-wide. BigQuery analysis of smart meter data shows 14 sites with above-average consumption patterns — automated alerts have been triggered for 6 of these.",
+      "Energy costs across all NRMA sites are up 11.2% YTD versus prior year, driven by grid tariff increases. Parks sites account for 68% of total energy spend. Operating margin impact is -0.8pp group-wide. BigQuery analysis of smart meter data (via native semantic layer, queried by Claude Desktop) shows 14 sites with above-average consumption patterns — automated alerts have been triggered for 6 of these.",
     sources: ["Google BigQuery", "Oracle NetSuite"],
     tags: ["BigQuery", "Energy", "Margin Impact"],
+  },
+  {
+    id: "routing",
+    label: "Smart Routing Demo",
+    unit: "Group Finance",
+    question: "What is the status of invoice #INV-2024-8821, and how does our average debtor days this quarter compare to the last 12 months?",
+    answer:
+      "Invoice #INV-2024-8821 (NetSuite, live): Issued to SIXT Australia on 14 May 2026, AUD $142,800, status OVERDUE by 7 days. Contact: accounts@sixt.com.au. \u2014 Debtor days this quarter (BigQuery, 12-month history): Q2 2026 average is 38.4 days, up from the 12-month average of 33.1 days (+5.3 days). The invoice above is a contributor. Recommend escalation workflow via Power Automate.",
+    sources: ["Oracle NetSuite (live)", "Google BigQuery (historical)"],
+    tags: ["Hybrid Query", "NetSuite Real-time", "BigQuery Historical", "Smart Routing"],
   },
 ];
 
@@ -186,7 +196,7 @@ export default function UseCases() {
                 className="text-xs"
                 style={{ color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-mono)" }}
               >
-                Perplexity Computer — Synthesised Response
+                AI Agent — Synthesised Response (Claude Desktop or Perplexity)
               </div>
             </div>
             <p

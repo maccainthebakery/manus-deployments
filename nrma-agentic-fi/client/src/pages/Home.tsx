@@ -11,6 +11,7 @@ import Roadmap from "@/components/Roadmap";
 import Footer from "@/components/Footer";
 import FoundationSetup from "@/components/FoundationSetup";
 import SemanticLayer from "@/components/SemanticLayer";
+import RoutingIntelligence from "@/components/RoutingIntelligence";
 import QuickJump from "@/components/QuickJump";
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
       <Hero />
       <Opportunity />
       <Architecture />
+      <RoutingIntelligence />
       <SemanticLayer />
       <UseCases />
       <Roadmap />

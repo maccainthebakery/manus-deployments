@@ -23,26 +23,26 @@ const phases = [
     duration: "Weeks 1–4",
     status: "ready",
     description:
-      "Establish Perplexity Computer Enterprise environment. Connect NetSuite via MCP (already proven via Zapier/Replit). Deliver first working demo: natural language query against live NetSuite financial data. Demonstrate to CTO.",
+      "COMPLETE. Both Claude Desktop and Perplexity Computer are validated on the off-the-shelf NetSuite MCP adaptor (read-only). Analyst-grade financial queries against live sandbox data confirmed. CTO demo material captured. Next: write actions via custom MCP extension.",
     deliverables: [
-      "Perplexity Computer Enterprise provisioned",
-      "NetSuite MCP connector live",
-      "First financial query demo",
-      "CTO sign-off on approach",
+      "Perplexity Computer Enterprise provisioned ✓",
+      "Claude Desktop + NetSuite MCP validated ✓",
+      "Perplexity + NetSuite MCP validated ✓",
+      "Read-only access confirmed — write MCP planned",
     ],
   },
   {
     phase: "Phase 2",
-    title: "BigQuery & Data Lake Integration",
+    title: "BigQuery Semantic Layer Decision",
     duration: "Weeks 5–8",
     status: "planned",
     description:
-      "Deploy Looker or Cube.dev as the semantic layer in front of Google BigQuery. Define core business metrics (revenue, occupancy, cost per unit) in the semantic layer. Connect to Perplexity via API. Enable cross-ERP + BigQuery queries.",
+      "IN PROGRESS. Cube.dev trial is active. Claude Desktop is already connected to BigQuery via the native semantic layer. Evaluating Cube.dev vs BigQuery native on MCP compatibility, governance, and cost before committing. Decision will determine the semantic layer architecture for both AI clients.",
     deliverables: [
-      "Looker or Cube.dev deployed",
-      "Core metrics defined in semantic layer",
-      "BigQuery ↔ Perplexity integration live",
-      "Cross-source query capability demonstrated",
+      "Claude Desktop → BigQuery native semantic layer ✓",
+      "Cube.dev trial active — evaluating now",
+      "Semantic layer decision: Cube.dev vs native",
+      "Both AI clients connected to BigQuery",
     ],
   },
   {

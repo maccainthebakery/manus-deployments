@@ -3,6 +3,9 @@
    NRMA AI | Automation Team
    Custom SVG-based layered diagram with hover tooltips,
    animated connector lines, and NRMA blue/white branding.
+   Updated May 2026: Dual AI clients (Claude Desktop + Perplexity),
+   off-the-shelf NetSuite MCP (read-only), Cube.dev trial vs
+   BigQuery native semantic layer.
    ============================================================ */
 import { useState } from "react";
 
@@ -18,9 +21,16 @@ const nodes: NodeDef[] = [
   {
     id: "perplexity",
     label: "Perplexity Computer",
-    sublabel: "Enterprise Agent",
+    sublabel: "Enterprise — Validated ✓",
     tier: "agentic",
-    tooltip: "LLM-agnostic agentic layer. Routes queries to Claude, GPT-4o, or Sonar. Orchestrates all downstream semantic layers via MCP and REST.",
+    tooltip: "LLM-agnostic agentic layer. Connected to NetSuite via off-the-shelf MCP adaptor (read-only). Routes queries to Claude, GPT-4o, or Sonar. Validated in sandbox.",
+  },
+  {
+    id: "claude",
+    label: "Claude Desktop",
+    sublabel: "Enterprise — Validated ✓",
+    tier: "agentic",
+    tooltip: "Anthropic Claude Desktop connected to both NetSuite (off-the-shelf MCP, read-only) and BigQuery via native semantic layer. Currently the primary client for BigQuery queries.",
   },
   {
     id: "shortcut",
@@ -31,17 +41,24 @@ const nodes: NodeDef[] = [
   },
   {
     id: "looker",
-    label: "Looker / Cube.dev",
-    sublabel: "Data Semantic Layer",
+    label: "Cube.dev",
+    sublabel: "Semantic Layer — Trial Active",
     tier: "semantic-data",
-    tooltip: "Purpose-built semantic layer for BigQuery. Defines business metrics, KPIs, and dimensions before data reaches the agentic layer.",
+    tooltip: "Cube.dev trial underway as governed semantic layer for BigQuery. Defines business metrics, KPIs, and dimensions. Native MCP endpoint for AI client connectivity. Being evaluated against BigQuery's inbuilt semantic layer.",
+  },
+  {
+    id: "bq-native",
+    label: "BigQuery Native Semantic",
+    sublabel: "Inbuilt — Claude Connected",
+    tier: "semantic-data",
+    tooltip: "BigQuery's inbuilt semantic layer (BI Engine / Looker-native). Claude Desktop is currently connected to this directly. Being trialled alongside Cube.dev to compare governance, performance, and MCP compatibility.",
   },
   {
     id: "n8n",
     label: "n8n",
-    sublabel: "ERP Semantic Layer",
+    sublabel: "ERP Connector Layer",
     tier: "semantic-erp",
-    tooltip: "API abstraction layer for non-Microsoft ERPs only. Normalises NetSuite, Oracle GFS, and Newbook REST/SOAP interfaces into clean queryable endpoints.",
+    tooltip: "API abstraction layer for non-Microsoft ERPs only. Normalises NetSuite, Oracle GFS, and Newbook REST/SOAP interfaces. Note: off-the-shelf NetSuite MCP adaptor now available — n8n role for NetSuite may be superseded.",
   },
   {
     id: "ms365",
@@ -55,14 +72,14 @@ const nodes: NodeDef[] = [
     label: "Google BigQuery",
     sublabel: "Data Lake",
     tier: "source",
-    tooltip: "Primary data lake. Exposes structured analytics data via Looker or Cube.dev semantic layer.",
+    tooltip: "Primary data lake. Accessible via Cube.dev semantic layer (trial) or BigQuery's native semantic layer. Claude Desktop currently queries via native semantic layer.",
   },
   {
     id: "netsuite",
     label: "Oracle NetSuite",
-    sublabel: "ERP",
+    sublabel: "ERP — MCP Read-Only ✓",
     tier: "source",
-    tooltip: "Core financial ERP. REST API / SOAP. Already proven via Zapier and Replit console integration.",
+    tooltip: "Core financial ERP. Off-the-shelf NetSuite MCP adaptor validated with both Claude Desktop and Perplexity. Read-only. Write actions require a custom MCP extension.",
   },
   {
     id: "gfs",
@@ -88,10 +105,10 @@ const nodes: NodeDef[] = [
 ];
 
 const tierConfig = {
-  agentic: { bg: "#003087", text: "#ffffff", border: "#0055D4", label: "Agentic Layer" },
+  agentic: { bg: "#003087", text: "#ffffff", border: "#0055D4", label: "AI Clients (Validated)" },
   consumer: { bg: "#ffffff", text: "#003087", border: "#003087", label: "Consumers" },
-  "semantic-data": { bg: "#0055D4", text: "#ffffff", border: "#0078D4", label: "Data Semantic Layer" },
-  "semantic-erp": { bg: "#0078D4", text: "#ffffff", border: "#0099CC", label: "ERP Semantic Layer" },
+  "semantic-data": { bg: "#0055D4", text: "#ffffff", border: "#0078D4", label: "Data Semantic Layer (Trial)" },
+  "semantic-erp": { bg: "#0078D4", text: "#ffffff", border: "#0099CC", label: "ERP Connector Layer" },
   ms365: { bg: "#0099CC", text: "#ffffff", border: "#00BBDD", label: "Microsoft 365 Native" },
   source: { bg: "#f0f5ff", text: "#003087", border: "#b3cdf5", label: "Source Systems" },
 };
@@ -137,7 +154,7 @@ export default function ArchDiagram() {
             left: Math.min(tooltip.x, 520),
             top: tooltip.y - 8,
             transform: "translate(-50%, -100%)",
-            maxWidth: 260,
+            maxWidth: 280,
           }}
         >
           <div
@@ -167,20 +184,38 @@ export default function ArchDiagram() {
         </div>
       )}
 
-      {/* ── Row 1: Agentic + Consumer ── */}
-      <div className="flex gap-4 justify-center mb-0">
+      {/* ── Row 1: Dual AI Clients + Consumer ── */}
+      <div className="flex gap-3 justify-center mb-0">
         <DiagramNode node={getNode("perplexity")} hovered={hovered} onEnter={handleMouseEnter} onLeave={handleMouseLeave} wide />
+        <DiagramNode node={getNode("claude")} hovered={hovered} onEnter={handleMouseEnter} onLeave={handleMouseLeave} wide />
         <DiagramNode node={getNode("shortcut")} hovered={hovered} onEnter={handleMouseEnter} onLeave={handleMouseLeave} />
       </div>
 
-      {/* Connector row 1→2 */}
-      <ConnectorRow count={3} />
+      {/* Read-only callout */}
+      <div className="flex justify-center mt-2 mb-1">
+        <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-4 py-1.5">
+          <span className="text-xs font-semibold text-amber-700">NetSuite MCP: Read-Only</span>
+          <span className="text-xs text-amber-600">— Write actions require custom MCP extension</span>
+        </div>
+      </div>
 
-      {/* ── Row 2: Three semantic layers ── */}
-      <div className="grid grid-cols-3 gap-4 mb-0">
+      {/* Connector row 1→2 */}
+      <ConnectorRow count={4} />
+
+      {/* ── Row 2: Semantic layers ── */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-0">
         <DiagramNode node={getNode("looker")} hovered={hovered} onEnter={handleMouseEnter} onLeave={handleMouseLeave} />
+        <DiagramNode node={getNode("bq-native")} hovered={hovered} onEnter={handleMouseEnter} onLeave={handleMouseLeave} />
         <DiagramNode node={getNode("n8n")} hovered={hovered} onEnter={handleMouseEnter} onLeave={handleMouseLeave} />
         <DiagramNode node={getNode("ms365")} hovered={hovered} onEnter={handleMouseEnter} onLeave={handleMouseLeave} />
+      </div>
+
+      {/* Trial callout */}
+      <div className="flex justify-center mt-2 mb-1">
+        <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-4 py-1.5">
+          <span className="text-xs font-semibold text-blue-700">Cube.dev Trial Active</span>
+          <span className="text-xs text-blue-600">— evaluating vs BigQuery native semantic layer</span>
+        </div>
       </div>
 
       {/* Connector row 2→3 */}

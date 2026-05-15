@@ -28,7 +28,7 @@ function useCountUp(target: number, duration = 1800, start = false) {
 const stats = [
   { value: 6, suffix: "+", label: "Business Units" },
   { value: 3, suffix: "", label: "ERP Systems" },
-  { value: 1, suffix: "", label: "Unified AI Layer" },
+  { value: 2, suffix: "", label: "AI Clients Validated" },
   { value: 100, suffix: "%", label: "LLM Agnostic" },
 ];
 
@@ -108,9 +108,7 @@ export default function Hero() {
             }`}
             style={{ fontFamily: "var(--font-body)", fontWeight: 300 }}
           >
-            A unified agentic layer — powered by Perplexity Computer — connecting
-            NetSuite, Oracle GFS, Newbook, BigQuery, and Microsoft 365 to deliver
-            financial analyst-grade insights across every business unit.
+            A unified agentic layer — Claude Desktop and Perplexity Computer, both validated — connecting NetSuite (off-the-shelf MCP, read-only), BigQuery (native semantic layer + Cube.dev trial), Oracle GFS, Newbook, and Microsoft 365 to deliver financial analyst-grade insights across every business unit.
           </p>
 
           {/* CTA buttons */}
