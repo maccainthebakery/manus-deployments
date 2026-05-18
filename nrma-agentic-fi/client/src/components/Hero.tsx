@@ -108,7 +108,7 @@ export default function Hero() {
             }`}
             style={{ fontFamily: "var(--font-body)", fontWeight: 300 }}
           >
-            A unified agentic layer — Claude Desktop and Perplexity Computer, both validated — connecting NetSuite (off-the-shelf MCP, read-only), BigQuery (native semantic layer + Cube.dev trial), Oracle GFS, Newbook, and Microsoft 365 to deliver financial analyst-grade insights across every business unit.
+            A unified agentic layer — Claude Desktop and Perplexity Computer, both live — connecting NetSuite (Oracle AI Connector, read + write), BigQuery (native semantic layer + Cube.dev trial), Oracle GFS, Newbook, and Microsoft 365 to deliver financial analyst-grade insights across every business unit.
           </p>
 
           {/* CTA buttons */}

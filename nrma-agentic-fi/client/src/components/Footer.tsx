@@ -50,16 +50,16 @@ export default function Footer() {
                 lineHeight: 1.15,
               }}
             >
-              Ready to Build the
+              Ready to Scale
               <br />
-              <span style={{ color: "var(--nrma-cyan)" }}>Proof of Value?</span>
+              <span style={{ color: "var(--nrma-cyan)" }}>Group Intelligence?</span>
             </h2>
             <p
               className="text-white/75 text-lg mb-10 leading-relaxed"
               style={{ fontFamily: "var(--font-body)", fontWeight: 300 }}
             >
-              The NetSuite API connection is already proven. Perplexity Enterprise is already
-              onboarded. The first working demo is weeks away, not months.
+              Both AI clients are live on the NetSuite AI Connector. BigQuery is connected.
+              The foundation is built — the next phase is scaling across every business unit.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 mb-16">

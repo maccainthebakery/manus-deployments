@@ -55,7 +55,7 @@ const steps: Step[] = [
     ],
     badge: "Free — No Licensing Cost",
     note:
-      "Oracle's NetSuite AI Connector Service is not a paid feature — MCP Standard Tools is a free SuiteApp included with NetSuite. The connector supports read and write operations via SuiteTalk (same permissions model). Write capabilities (create orders, update records, call SuiteScripts) are available once the custom role grants appropriate permissions. Start with read-only for the PoV, then expand permissions incrementally.",
+      "Oracle's NetSuite AI Connector Service is not a paid feature — MCP Standard Tools is a free SuiteApp included with NetSuite. The connector supports read and write operations via SuiteTalk (same permissions model). Write capabilities (create orders, update records, call SuiteScripts) are available once the custom role grants appropriate permissions. Start with read-only, then expand permissions incrementally as confidence grows.",
   },
   {
     id: 2,
@@ -86,11 +86,11 @@ const steps: Step[] = [
       "Name the role: AI Integration — Read Only (or similar)",
       "Assign permissions: MCP Server Connection, OAuth 2.0 Access Tokens",
       "Add read permissions for: Transactions, Financial Reports, Saved Searches, SuiteQL",
-      "For the initial PoV, grant read-only financial permissions. Write permissions (create, update, delete) can be added incrementally once read access is validated — the connector supports both via SuiteTalk",
+      "Grant read-only financial permissions to start. Write permissions (create, update, delete) can be added incrementally — the connector supports both via SuiteTalk",
       "Assign the role to the integration user account",
     ],
     note:
-      "Role-based security means the AI cannot access data beyond what this role permits. Start restrictive — you can expand permissions after the PoV validates the approach.",
+      "Role-based security means the AI cannot access data beyond what this role permits. Start restrictive and expand permissions incrementally as each capability is validated.",
   },
   {
     id: 4,
@@ -202,7 +202,7 @@ const steps: Step[] = [
       "Check that the data respects the role permissions set by the admin",
       "Note any subsidiaries or cost centres visible — these should match the role's access scope",
     ],
-    code: "Test Prompt 2 — Data Access (works in both AI clients):\n\"Using NetSuite, show me total revenue by subsidiary\nfor the current financial year to date, in AUD.\"\n\nExpected: Calls netsuite_suiteql_query,\nreturns a table of subsidiaries with AUD revenue figures.\n\nNote: Read-only for PoV. Write access available via\nSuiteTalk permissions on the custom role.",
+    code: "Test Prompt 2 — Data Access (works in both AI clients):\n\"Using NetSuite, show me total revenue by subsidiary\nfor the current financial year to date, in AUD.\"\n\nExpected: Calls netsuite_suiteql_query,\nreturns a table of subsidiaries with AUD revenue figures.\n\nNote: Start read-only, then expand to write via\nSuiteTalk permissions on the custom role.",
     badge: "Test Call 2",
   },
   {
@@ -514,10 +514,9 @@ export default function FoundationSetup() {
               Sandbox First. Production Never Touched.
             </h3>
             <p className="text-blue-200 text-sm leading-relaxed">
-              The entire PoV runs against the NetSuite sandbox environment. Production data is
-              never exposed during validation. Once all three test calls return clean results,
-              the architecture is proven and a controlled production rollout can be scoped with
-              full confidence.
+              All integration work runs against the NetSuite sandbox environment first. Production data is
+              never exposed during initial setup. Once all three test calls return clean results,
+              a controlled production rollout can be scoped with full confidence.
             </p>
           </div>
           <div className="flex-shrink-0 flex items-center gap-2 bg-white/10 border border-white/20 rounded-xl px-4 py-3">

@@ -19,16 +19,16 @@ function useInView(threshold = 0.1) {
 const phases = [
   {
     phase: "Phase 1",
-    title: "Foundation & Proof of Value",
+    title: "Foundation — Validated",
     duration: "Weeks 1–4",
     status: "ready",
     description:
-      "COMPLETE. Both Claude Desktop and Perplexity Computer are validated on the off-the-shelf NetSuite MCP adaptor (read-only). Analyst-grade financial queries against live sandbox data confirmed. CTO demo material captured. Next: write actions via custom MCP extension.",
+      "COMPLETE. Both Claude Desktop and Perplexity Computer are validated on Oracle's NetSuite AI Connector (MCP). Analyst-grade financial queries against live NetSuite data confirmed. Read access live; write access available via SuiteTalk permissions on the custom role.",
     deliverables: [
       "Perplexity Computer Enterprise provisioned ✓",
       "Claude Desktop + NetSuite MCP validated ✓",
       "Perplexity + NetSuite MCP validated ✓",
-      "Read-only access confirmed — write MCP planned",
+      "Read access live; write access via SuiteTalk permissions",
     ],
   },
   {
@@ -112,7 +112,7 @@ export default function Roadmap() {
                 lineHeight: 1.15,
               }}
             >
-              From Proof of Value
+              From Foundation
               <br />
               to Group Intelligence
             </h2>
@@ -120,8 +120,8 @@ export default function Roadmap() {
               className="text-gray-600 max-w-xl text-base md:text-lg leading-relaxed"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              A pragmatic 20-week path that delivers value at every phase, starting with
-              what is already proven — the NetSuite API connection.
+              A pragmatic 20-week path that delivers value at every phase, building on
+              what is already live — both AI clients validated on the NetSuite AI Connector.
             </p>
           </div>
         </div>
