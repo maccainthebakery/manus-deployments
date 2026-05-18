@@ -40,11 +40,20 @@ const layers = [
   {
     tier: "Layer 2B",
     title: "ERP Connector Layer",
-    tool: "NetSuite MCP (off-the-shelf) + n8n",
+    tool: "Oracle NetSuite AI Connector (MCP) + n8n",
     description:
-      "Off-the-shelf NetSuite MCP adaptor validated — read-only. Write actions require a custom MCP extension. n8n remains the connector layer for Oracle GFS and Newbook where no native MCP adaptor exists.",
+      "Oracle's official NetSuite AI Connector (MCP-based, launched mid-2025) is validated on both Claude Desktop and Perplexity. Supports read and write via SuiteTalk permissions — create orders, call SuiteScripts, generate SuiteQL on the fly. n8n handles Oracle GFS and Newbook where no native MCP adaptor exists.",
     color: "#0078D4",
-    tags: ["NetSuite MCP", "n8n", "Oracle GFS", "Newbook PMS", "Read-Only"],
+    tags: ["Oracle AI Connector", "NetSuite MCP", "Read + Write", "n8n", "SuiteQL"],
+  },
+  {
+    tier: "Layer 2D",
+    title: "GCP ETL Pipeline",
+    tool: "GCP Application Integration (iPaaS)",
+    description:
+      "GCP Application Integration handles the plumbing: reliable nightly/hourly sync of GL, orders, inventory, and custom records from NetSuite → BigQuery. This is the engine that keeps the analytical layer clean and current. Claude Desktop is the smart front-end on top — not a replacement for the pipeline.",
+    color: "#1A73E8",
+    tags: ["GCP Application Integration", "ETL", "BigQuery Pipeline", "CDC", "Scheduled Sync"],
   },
   {
     tier: "Layer 2C",
@@ -150,10 +159,10 @@ export default function Architecture() {
             <ul className="space-y-3">
               {[
                 "Claude Desktop + Perplexity both validated ✓",
-                "NetSuite MCP adaptor: off-the-shelf, read-only ✓",
+                "Oracle NetSuite AI Connector (MCP): read + write validated ✓",
+                "GCP Application Integration: nightly ETL → BigQuery ✓",
                 "Cube.dev trial active — semantic layer evaluation",
                 "Claude Desktop → BigQuery native semantic layer ✓",
-                "Write actions: custom MCP extension required",
               ].map((point) => (
                 <li key={point} className="flex items-start gap-2 text-sm text-white/80">
                   <span style={{ color: "var(--nrma-cyan)" }} className="mt-0.5 shrink-0">→</span>

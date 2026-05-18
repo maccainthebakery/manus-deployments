@@ -5,7 +5,7 @@
    Design: white background, asymmetric layout, NRMA navy/cyan palette
    ============================================================ */
 import { useRef, useEffect, useState } from "react";
-import { ArrowRight, Clock, BarChart3, Zap, GitBranch } from "lucide-react";
+import { ArrowRight, Clock, BarChart3, Zap, GitBranch, Database, Layers } from "lucide-react";
 
 function useInView(threshold = 0.1) {
   const ref = useRef<HTMLDivElement>(null);
@@ -298,6 +298,88 @@ export default function RoutingIntelligence() {
                 This routing logic lives in the AI client's system prompt — no code required. Claude and Perplexity both honour it. The key is being intentional about routing so you don't accidentally mix real-time and historical data in the same answer without flagging it.
               </p>
             </div>
+          </div>
+        </div>
+
+        {/* GCP + Claude complementary stack callout */}
+        <div
+          className={`mt-8 rounded-xl overflow-hidden transition-all duration-700 delay-400 ${
+            inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+          style={{ border: "1px solid oklch(0.90 0.02 264)" }}
+        >
+          <div
+            className="px-6 py-3 flex items-center gap-2"
+            style={{ background: "oklch(0.97 0.015 264)", borderBottom: "1px solid oklch(0.90 0.02 264)" }}
+          >
+            <Layers size={13} style={{ color: "var(--nrma-blue)" }} />
+            <span
+              className="text-xs font-semibold"
+              style={{ color: "var(--nrma-navy)", fontFamily: "var(--font-mono)" }}
+            >
+              THE COMPLEMENTARY STACK — GCP + CLAUDE DESKTOP
+            </span>
+          </div>
+          <div className="grid md:grid-cols-2 gap-0">
+            <div className="p-6" style={{ borderRight: "1px solid oklch(0.90 0.02 264)" }}>
+              <div className="flex items-center gap-3 mb-3">
+                <div
+                  className="w-7 h-7 rounded flex items-center justify-center shrink-0"
+                  style={{ background: "#1A73E8" }}
+                >
+                  <Database size={13} color="white" />
+                </div>
+                <span
+                  className="text-xs font-semibold"
+                  style={{ color: "#1A73E8", fontFamily: "var(--font-mono)" }}
+                >
+                  GCP Application Integration — The Engine
+                </span>
+              </div>
+              <p className="text-sm text-gray-600 leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>
+                Handles the plumbing: reliable nightly/hourly sync of GL, orders, inventory, and custom records from NetSuite into BigQuery. Enterprise-grade for high-volume extracts, transformations, and CDC. Not designed for interactive use — designed for reliability at scale.
+              </p>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {["Nightly ETL", "CDC", "NetSuite → BigQuery", "High-volume"].map(t => (
+                  <span key={t} className="text-xs px-2 py-0.5 rounded" style={{ background: "#1A73E820", color: "#1A73E8", fontFamily: "var(--font-mono)" }}>{t}</span>
+                ))}
+              </div>
+            </div>
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div
+                  className="w-7 h-7 rounded flex items-center justify-center shrink-0"
+                  style={{ background: "var(--nrma-navy)" }}
+                >
+                  <Zap size={13} color="var(--nrma-cyan)" />
+                </div>
+                <span
+                  className="text-xs font-semibold"
+                  style={{ color: "var(--nrma-navy)", fontFamily: "var(--font-mono)" }}
+                >
+                  Claude Desktop + Perplexity — The Brain
+                </span>
+              </div>
+              <p className="text-sm text-gray-600 leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>
+                The smart front-end on top of the pipeline. Your analyst opens Claude Desktop and talks to the data instead of building Saved Searches or SuiteQL queries. Can even help you build or debug the GCP flows: "Here's the integration I want — generate the flow JSON for me."
+              </p>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {["Interactive", "Ad-hoc queries", "Natural language", "Exploration"].map(t => (
+                  <span key={t} className="text-xs px-2 py-0.5 rounded" style={{ background: "var(--nrma-tint)", color: "var(--nrma-blue)", fontFamily: "var(--font-mono)" }}>{t}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div
+            className="px-6 py-3 text-xs text-center"
+            style={{
+              background: "oklch(0.97 0.015 264)",
+              borderTop: "1px solid oklch(0.90 0.02 264)",
+              color: "var(--nrma-navy)",
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            <strong>They don't compete.</strong> GCP keeps BigQuery clean and current. Claude and Perplexity make it conversational. They're the new stack.
           </div>
         </div>
       </div>

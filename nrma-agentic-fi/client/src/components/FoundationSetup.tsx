@@ -3,8 +3,9 @@
  * Design: Executive Command Centre — NRMA deep blue (#003087) on white
  * Role-filtered step-by-step guide for NetSuite admins, Perplexity setup,
  * and AI & Automation Team.
- * Updated May 2026: Both Claude Desktop and Perplexity validated on off-the-shelf
- * NetSuite MCP adaptor (read-only). Write actions require custom MCP extension.
+ * Updated May 2026: Both Claude Desktop and Perplexity validated on Oracle's official
+ * NetSuite AI Connector (MCP-based, launched mid-2025). Read + write supported via
+ * SuiteTalk permissions. GCP Application Integration handles ETL pipeline to BigQuery.
  */
 
 import { useState, type ReactNode } from "react";
@@ -44,7 +45,7 @@ const steps: Step[] = [
     phase: "NetSuite Sandbox",
     title: "Install the MCP Standard Tools SuiteApp",
     description:
-      "Deploy Oracle's free MCP Standard Tools SuiteApp into your NetSuite sandbox account. This is the off-the-shelf adaptor validated with both Claude Desktop and Perplexity Computer — no custom development required. Note: this adaptor is read-only.",
+      "Deploy Oracle's official NetSuite AI Connector (MCP Standard Tools SuiteApp) into your NetSuite sandbox account. This is Oracle's first-class MCP integration launched mid-2025 — validated on both Claude Desktop and Perplexity Computer with no custom development required. Supports read and write via SuiteTalk permissions.",
     details: [
       "Log into your NetSuite sandbox account (not production)",
       "Navigate to SuiteApp Marketplace (Customisation > SuiteApp Marketplace)",
@@ -54,7 +55,7 @@ const steps: Step[] = [
     ],
     badge: "Free — No Licensing Cost",
     note:
-      "The AI Connector Service is not a paid feature. Oracle confirmed: NetSuite AI Connector Service is not a paid feature. MCP Standard Tools is a free SuiteApp. The off-the-shelf adaptor provides read-only access. Write actions (create, update, delete records) require a separate custom MCP extension — a planned next step.",
+      "Oracle's NetSuite AI Connector Service is not a paid feature — MCP Standard Tools is a free SuiteApp included with NetSuite. The connector supports read and write operations via SuiteTalk (same permissions model). Write capabilities (create orders, update records, call SuiteScripts) are available once the custom role grants appropriate permissions. Start with read-only for the PoV, then expand permissions incrementally.",
   },
   {
     id: 2,
@@ -85,7 +86,7 @@ const steps: Step[] = [
       "Name the role: AI Integration — Read Only (or similar)",
       "Assign permissions: MCP Server Connection, OAuth 2.0 Access Tokens",
       "Add read permissions for: Transactions, Financial Reports, Saved Searches, SuiteQL",
-      "Do NOT grant write or delete permissions for the PoV",
+      "For the initial PoV, grant read-only financial permissions. Write permissions (create, update, delete) can be added incrementally once read access is validated — the connector supports both via SuiteTalk",
       "Assign the role to the integration user account",
     ],
     note:
@@ -176,7 +177,7 @@ const steps: Step[] = [
     phase: "Perplexity Enterprise",
     title: "Verify Tool Discovery",
     description:
-      "Confirm both AI clients can see and describe all available NetSuite MCP tools. Both Claude Desktop and Perplexity have been validated on this step — the off-the-shelf adaptor works with both.",
+      "Confirm both AI clients can see and describe all available NetSuite MCP tools. Both Claude Desktop and Perplexity have been validated on this step — Oracle's NetSuite AI Connector works with both AI clients out of the box.",
     details: [
       "Open a new Perplexity Computer session (or Claude Desktop)",
       "Enable the NetSuite connector for the session",
@@ -201,7 +202,7 @@ const steps: Step[] = [
       "Check that the data respects the role permissions set by the admin",
       "Note any subsidiaries or cost centres visible — these should match the role's access scope",
     ],
-    code: "Test Prompt 2 — Data Access (read-only — works in both AI clients):\n\"Using NetSuite, show me total revenue by subsidiary\nfor the current financial year to date, in AUD.\"\n\nExpected: Calls netsuite_suiteql_query,\nreturns a table of subsidiaries with AUD revenue figures.\n\nNote: Read-only. Write actions require a custom MCP extension.",
+    code: "Test Prompt 2 — Data Access (works in both AI clients):\n\"Using NetSuite, show me total revenue by subsidiary\nfor the current financial year to date, in AUD.\"\n\nExpected: Calls netsuite_suiteql_query,\nreturns a table of subsidiaries with AUD revenue figures.\n\nNote: Read-only for PoV. Write access available via\nSuiteTalk permissions on the custom role.",
     badge: "Test Call 2",
   },
   {
@@ -221,7 +222,7 @@ const steps: Step[] = [
     code: "Test Prompt 3 — Reasoning:\n\"Compare total operating costs for Q3 FY2025 vs Q3 FY2024\nusing NetSuite data. Identify the top 3 cost categories\nthat increased year-on-year and suggest possible drivers.\"\n\nExpected: Multi-step reasoning, comparative table,\nnarrative analysis with suggested drivers.",
     badge: "Test Call 3 — CTO Demo",
     note:
-      "Both Claude Desktop and Perplexity can produce analyst-grade narratives from live NetSuite sandbox data via the off-the-shelf MCP adaptor. The PoV is proven for read access. The next milestone is extending to write actions via a custom MCP extension.",
+      "Both Claude Desktop and Perplexity can produce analyst-grade narratives from live NetSuite sandbox data via Oracle's NetSuite AI Connector. Read access is proven. Write actions (create orders, update records, call SuiteScripts) are available by expanding the custom role permissions — no additional connector development required.",
   },
 ];
 
