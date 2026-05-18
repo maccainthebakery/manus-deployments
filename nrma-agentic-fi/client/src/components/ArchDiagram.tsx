@@ -4,7 +4,7 @@
    Custom SVG-based layered diagram with hover tooltips,
    animated connector lines, and NRMA blue/white branding.
    Updated May 2026: Dual AI clients (Claude Desktop + Perplexity),
-   off-the-shelf NetSuite MCP (read-only), Cube.dev trial vs
+   Oracle NetSuite AI Connector (MCP, read + write), Cube.dev trial vs
    BigQuery native semantic layer.
    ============================================================ */
 import { useState } from "react";
@@ -23,14 +23,14 @@ const nodes: NodeDef[] = [
     label: "Perplexity Computer",
     sublabel: "Enterprise — Validated ✓",
     tier: "agentic",
-    tooltip: "LLM-agnostic agentic layer. Connected to NetSuite via off-the-shelf MCP adaptor (read-only). Routes queries to Claude, GPT-4o, or Sonar. Validated in sandbox.",
+    tooltip: "LLM-agnostic agentic layer. Connected to NetSuite via Oracle AI Connector (MCP, read + write). Routes queries to Claude, GPT-4o, or Sonar. Both AI clients validated.",
   },
   {
     id: "claude",
     label: "Claude Desktop",
     sublabel: "Enterprise — Validated ✓",
     tier: "agentic",
-    tooltip: "Anthropic Claude Desktop connected to both NetSuite (off-the-shelf MCP, read-only) and BigQuery via native semantic layer. Currently the primary client for BigQuery queries.",
+    tooltip: "Anthropic Claude Desktop connected to both NetSuite (Oracle AI Connector, read + write) and BigQuery via native semantic layer. Currently the primary client for BigQuery queries.",
   },
   {
     id: "shortcut",
@@ -77,9 +77,9 @@ const nodes: NodeDef[] = [
   {
     id: "netsuite",
     label: "Oracle NetSuite",
-    sublabel: "ERP — MCP Read-Only ✓",
+    sublabel: "ERP — Oracle AI Connector ✓",
     tier: "source",
-    tooltip: "Core financial ERP. Off-the-shelf NetSuite MCP adaptor validated with both Claude Desktop and Perplexity. Read-only. Write actions require a custom MCP extension.",
+    tooltip: "Core financial ERP. Oracle NetSuite AI Connector (MCP) validated with both Claude Desktop and Perplexity. Read + write via SuiteTalk permissions on the custom role.",
   },
   {
     id: "gfs",
@@ -191,11 +191,11 @@ export default function ArchDiagram() {
         <DiagramNode node={getNode("shortcut")} hovered={hovered} onEnter={handleMouseEnter} onLeave={handleMouseLeave} />
       </div>
 
-      {/* Read-only callout */}
+      {/* Status callout */}
       <div className="flex justify-center mt-2 mb-1">
-        <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-4 py-1.5">
-          <span className="text-xs font-semibold text-amber-700">NetSuite MCP: Read-Only</span>
-          <span className="text-xs text-amber-600">— Write actions require custom MCP extension</span>
+        <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-full px-4 py-1.5">
+          <span className="text-xs font-semibold text-green-700">NetSuite MCP: Read + Write</span>
+          <span className="text-xs text-green-600">— Oracle AI Connector, SuiteTalk permissions</span>
         </div>
       </div>
 
