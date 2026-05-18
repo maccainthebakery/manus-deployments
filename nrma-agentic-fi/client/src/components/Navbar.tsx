@@ -13,6 +13,7 @@ const navLinks = [
   { label: "Use Cases", href: "#usecases" },
   { label: "Roadmap", href: "#roadmap" },
   { label: "Tool Landscape", href: "#tool-landscape" },
+  { label: "AU Adoption", href: "#australian-adoption" },
   { label: "Foundation Setup", href: "#foundation" },
   { label: "Get Started", href: "#cta" },
 ];

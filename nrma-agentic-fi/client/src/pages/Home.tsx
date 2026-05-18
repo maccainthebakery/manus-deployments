@@ -13,6 +13,7 @@ import FoundationSetup from "@/components/FoundationSetup";
 import SemanticLayer from "@/components/SemanticLayer";
 import RoutingIntelligence from "@/components/RoutingIntelligence";
 import ToolLandscape from "@/components/ToolLandscape";
+import AustralianAdoption from "@/components/AustralianAdoption";
 import QuickJump from "@/components/QuickJump";
 
 export default function Home() {
@@ -28,6 +29,7 @@ export default function Home() {
       <UseCases />
       <Roadmap />
       <ToolLandscape />
+      <AustralianAdoption />
       <FoundationSetup />
       <Footer />
     </div>
