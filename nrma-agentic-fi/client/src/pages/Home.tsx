@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import FoundationSetup from "@/components/FoundationSetup";
 import SemanticLayer from "@/components/SemanticLayer";
 import RoutingIntelligence from "@/components/RoutingIntelligence";
+import ToolLandscape from "@/components/ToolLandscape";
 import QuickJump from "@/components/QuickJump";
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
       <SemanticLayer />
       <UseCases />
       <Roadmap />
+      <ToolLandscape />
       <FoundationSetup />
       <Footer />
     </div>

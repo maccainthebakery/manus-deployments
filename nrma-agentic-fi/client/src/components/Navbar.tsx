@@ -12,6 +12,7 @@ const navLinks = [
   { label: "Semantic Layer", href: "#semantic-layer" },
   { label: "Use Cases", href: "#usecases" },
   { label: "Roadmap", href: "#roadmap" },
+  { label: "Tool Landscape", href: "#tool-landscape" },
   { label: "Foundation Setup", href: "#foundation" },
   { label: "Get Started", href: "#cta" },
 ];
