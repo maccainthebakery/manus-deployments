@@ -40,7 +40,6 @@ export default function Footer() {
               inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <div className="mono-label text-white/60 mb-4">Next Steps</div>
             <h2
               className="text-white mb-6"
               style={{
