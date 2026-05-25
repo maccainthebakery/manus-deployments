@@ -20,49 +20,49 @@ function useInView(threshold = 0.1) {
 
 const layers = [
   {
-    tier: "Layer 1",
-    title: "AI Clients — Validated",
-    tool: "Perplexity Computer + Claude Desktop",
+    tier: "Layer 1 — UX",
+    title: "Conversational Interface",
+    tool: "Microsoft Copilot (M365) · Claude Desktop · Perplexity Computer",
     description:
-      "Both Perplexity Computer and Claude Desktop are validated. Acts as a smart router: real-time operational queries (last 24h, invoice lookups, live GL) are routed to NetSuite MCP; analytical and historical queries (trends, forecasts, cross-system) are routed to BigQuery. Hybrid queries hit both and merge in reasoning. LLM-agnostic — Claude, GPT-4o, or Sonar.",
+      "Microsoft Copilot is the broad workforce interface — embedded in Teams, Outlook, and Office for everyday finance users. Claude Desktop and Perplexity Computer serve the AI & Automation team as validated power-user clients. Claude acts as the Merging & Reasoning Agent behind the scenes; Perplexity as the research assistant with live web context.",
     color: "#003087",
-    tags: ["Perplexity Computer", "Claude Desktop", "MCP Protocol", "LLM Agnostic"],
+    tags: ["Microsoft Copilot", "Claude Desktop", "Perplexity Computer", "M365"],
   },
   {
-    tier: "Layer 2A",
-    title: "BigQuery Semantic Layer — Trial",
-    tool: "Cube.dev (trial) vs BigQuery Native Semantic",
+    tier: "Layer 2 — Orchestration",
+    title: "Master Agent / Intent Router",
+    tool: "Agentic Framework (n8n orchestration)",
     description:
-      "Cube.dev trial is active as a governed semantic layer with native MCP endpoint. Claude Desktop is currently connected to BigQuery's inbuilt semantic layer. Evaluating both for governance, performance, and MCP compatibility before committing.",
+      "A master agent understands user intent and routes to the appropriate sub-agent: transactional queries → NetSuite MCP; aggregated/analytical queries → NRMA Data Semantic Layer MCP; operational workflows → NRMA Workflow Semantic Layer (n8n). The Merging & Reasoning Agent (Claude) synthesises multi-source results before returning to the user.",
     color: "#0055D4",
-    tags: ["Cube.dev Trial", "BigQuery Native", "Google BigQuery", "Semantic Layer"],
+    tags: ["Master Agent", "Intent Router", "Sub-Agents", "Session Memory", "n8n"],
   },
   {
-    tier: "Layer 2B",
-    title: "ERP Connector Layer",
-    tool: "Oracle NetSuite AI Connector (MCP) + n8n",
+    tier: "Layer 3A — Data Semantic",
+    title: "Data Semantic Layer (Analytical)",
+    tool: "BigQuery Native Semantic · Cube.dev (trial)",
     description:
-      "Oracle's official NetSuite AI Connector (MCP-based, launched mid-2025) is validated on both Claude Desktop and Perplexity. Supports read and write via SuiteTalk permissions — create orders, call SuiteScripts, generate SuiteQL on the fly. n8n handles Oracle GFS and Newbook where no native MCP adaptor exists.",
+      "Governs metric definitions, pre-aggregated business logic, and consistent joins across the BigQuery data lake. Exposed as the NRMA Data Semantic Layer MCP — agents query governed metrics, not raw tables. Claude Desktop is currently connected to BigQuery's native semantic layer; Cube.dev trial is evaluating multi-warehouse portability.",
     color: "#0078D4",
-    tags: ["Oracle AI Connector", "NetSuite MCP", "Read + Write", "n8n", "SuiteQL"],
+    tags: ["BigQuery Native", "Cube.dev Trial", "Governed Metrics", "MCP Endpoint"],
   },
   {
-    tier: "Layer 2D",
-    title: "GCP ETL Pipeline",
-    tool: "GCP Application Integration (iPaaS)",
+    tier: "Layer 3B — Workflow Semantic",
+    title: "Workflow Semantic Layer (Operational)",
+    tool: "n8n — Workflow Automation",
     description:
-      "GCP Application Integration handles the plumbing: reliable nightly/hourly sync of GL, orders, inventory, and custom records from NetSuite → BigQuery. This is the engine that keeps the analytical layer clean and current. Claude Desktop is the smart front-end on top — not a replacement for the pipeline.",
+      "n8n acts as the operational semantic layer: a governed catalogue of actions the AI can invoke — create PO, route for approval, post to GL, trigger notifications. Agents call named workflows, not raw APIs. Provides sequencing, error handling, retry logic, and human-in-the-loop checkpoints before any financial write action executes.",
     color: "#1A73E8",
-    tags: ["GCP Application Integration", "ETL", "BigQuery Pipeline", "CDC", "Scheduled Sync"],
+    tags: ["n8n", "Workflow Catalogue", "Write Actions", "Approval Routing", "Human-in-Loop"],
   },
   {
-    tier: "Layer 2C",
-    title: "Microsoft 365 Native",
-    tool: "Native MS Connectors (hosted by NRMA)",
+    tier: "Layer 4 — Sources",
+    title: "Source Systems + ETL Pipeline",
+    tool: "NetSuite ERP · Oracle GFS · Newbook · GCP BigQuery",
     description:
-      "NRMA already hosts all Microsoft connectors. SharePoint, OneDrive, Power Automate, and Teams integrate directly with the agentic layer — no middleware required.",
+      "NetSuite ERP (Oracle AI Connector MCP, read + write via SuiteTalk), Oracle GFS, and Newbook PMS are the operational sources. GCP Application Integration (iPaaS) handles nightly/hourly ELT sync → BigQuery, maintaining Raw / Transform / Curated layers. Microsoft 365 (SharePoint, Teams, Power Automate) connects natively.",
     color: "#0099CC",
-    tags: ["SharePoint", "OneDrive", "Power Automate", "Teams"],
+    tags: ["NetSuite ERP", "Oracle GFS", "Newbook", "GCP ETL", "BigQuery", "M365"],
   },
 ];
 
@@ -105,9 +105,7 @@ export default function Architecture() {
               className="text-gray-600 max-w-xl text-base md:text-lg leading-relaxed"
               style={{ fontFamily: "var(--font-body)" }}
             >
-              Each layer has a precise, non-overlapping role. The agentic layer reasons.
-              The semantic layers translate. The source systems provide truth.
-              Hover any node to explore the architecture.
+              Four layers, two semantic surfaces, one governed interface. The UX layer converses. The orchestration layer routes and reasons. The semantic layers translate — data for analytics, workflows for actions. The source systems provide truth.
             </p>
           </div>
         </div>

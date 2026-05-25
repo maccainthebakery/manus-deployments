@@ -274,7 +274,7 @@ export default function RoutingIntelligence() {
                 className="text-xs mb-3"
                 style={{ color: "var(--nrma-cyan)", fontFamily: "var(--font-mono)" }}
               >
-                SYSTEM PROMPT — ROUTING DECISION TREE
+                SYSTEM PROMPT — ROUTING DECISION TREE (3 CHANNELS)
               </div>
               <div
                 className="rounded-lg p-4 mb-4 text-sm leading-relaxed"
@@ -287,15 +287,16 @@ export default function RoutingIntelligence() {
                   border: "1px solid rgba(255,255,255,0.08)",
                 }}
               >
-                <span style={{ color: "var(--nrma-cyan)" }}>IF</span> the question involves anything that happened in the <span style={{ color: "#fbbf24" }}>last 24 hours</span> or requires a <span style={{ color: "#fbbf24" }}>live record lookup</span> (invoice, PO, GL entry, inventory) → <span style={{ color: "#4ade80" }}>use NetSuite MCP</span><br /><br />
-                <span style={{ color: "var(--nrma-cyan)" }}>IF</span> the question involves <span style={{ color: "#fbbf24" }}>trends, comparisons, forecasts, or data older than 24h</span> → <span style={{ color: "#4ade80" }}>use BigQuery semantic layer</span><br /><br />
-                <span style={{ color: "var(--nrma-cyan)" }}>IF</span> the question requires <span style={{ color: "#fbbf24" }}>both</span> (e.g. today vs historical average) → <span style={{ color: "#4ade80" }}>query both, merge in reasoning</span>
+                <span style={{ color: "var(--nrma-cyan)" }}>IF</span> the question involves anything in the <span style={{ color: "#fbbf24" }}>last 24 hours</span> or a <span style={{ color: "#fbbf24" }}>live record lookup</span> (invoice, PO, GL entry, inventory) → <span style={{ color: "#4ade80" }}>use NetSuite MCP</span><br /><br />
+                <span style={{ color: "var(--nrma-cyan)" }}>IF</span> the question involves <span style={{ color: "#fbbf24" }}>trends, comparisons, forecasts, or data older than 24h</span> → <span style={{ color: "#4ade80" }}>use NRMA Data Semantic Layer MCP (BigQuery)</span><br /><br />
+                <span style={{ color: "var(--nrma-cyan)" }}>IF</span> the question requires <span style={{ color: "#fbbf24" }}>both</span> (today vs historical average) → <span style={{ color: "#4ade80" }}>query both, merge in reasoning</span><br /><br />
+                <span style={{ color: "var(--nrma-cyan)" }}>IF</span> the question requires an <span style={{ color: "#fbbf24" }}>action</span> (create PO, post GL, send approval, trigger workflow) → <span style={{ color: "#4ade80" }}>invoke NRMA Workflow Semantic Layer (n8n)</span>
               </div>
               <p
                 className="text-sm"
                 style={{ color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-body)" }}
               >
-                This routing logic lives in the AI client's system prompt — no code required. Claude and Perplexity both honour it. The key is being intentional about routing so you don't accidentally mix real-time and historical data in the same answer without flagging it.
+                This routing logic lives in the AI client's system prompt — no code required. Claude and Perplexity both honour it. Three read channels (NetSuite, BigQuery, hybrid) plus one action channel (n8n workflows). The key is being intentional so you don't mix real-time and historical data, or trigger write actions without approval routing.
               </p>
             </div>
           </div>
@@ -317,7 +318,7 @@ export default function RoutingIntelligence() {
               className="text-xs font-semibold"
               style={{ color: "var(--nrma-navy)", fontFamily: "var(--font-mono)" }}
             >
-              THE COMPLEMENTARY STACK — GCP + CLAUDE DESKTOP
+              THE COMPLEMENTARY STACK — TWO SEMANTIC LAYERS + TWO AI CLIENTS
             </span>
           </div>
           <div className="grid md:grid-cols-2 gap-0">
