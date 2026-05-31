@@ -5,7 +5,7 @@
    Design: white background, asymmetric layout, NRMA navy/cyan palette
    ============================================================ */
 import { useRef, useEffect, useState } from "react";
-import { ArrowRight, Clock, BarChart3, Zap, GitBranch, Database, Layers } from "lucide-react";
+import { ArrowRight, Clock, BarChart3, Zap, GitBranch, Database, Layers, FileText, TrendingUp, DollarSign, Package } from "lucide-react";
 
 function useInView(threshold = 0.1) {
   const ref = useRef<HTMLDivElement>(null);
@@ -55,6 +55,22 @@ const routingExamples = [
     color: "var(--nrma-blue)",
   },
   {
+    icon: FileText,
+    label: "Real-time → NetSuite",
+    query: "List all open purchase orders for the Parks business unit over $50k.",
+    route: "NetSuite MCP",
+    reason: "Live procurement records — current approval status needed, not historical",
+    color: "var(--nrma-blue)",
+  },
+  {
+    icon: Package,
+    label: "Real-time → NetSuite",
+    query: "What's the current cash balance across all NRMA entity bank accounts?",
+    route: "NetSuite MCP",
+    reason: "Live GL balance — must reflect today's transactions, not yesterday's snapshot",
+    color: "var(--nrma-blue)",
+  },
+  {
     icon: BarChart3,
     label: "Analytical → BigQuery",
     query: "Show me Parks revenue trend vs budget for the last 18 months.",
@@ -63,11 +79,35 @@ const routingExamples = [
     color: "oklch(0.55 0.15 150)",
   },
   {
+    icon: TrendingUp,
+    label: "Analytical → BigQuery",
+    query: "Which business unit has had the highest variance to budget over the last 3 financial years?",
+    route: "BigQuery Semantic Layer",
+    reason: "Multi-year cross-BU aggregation — exactly what the analytical layer is built for",
+    color: "oklch(0.55 0.15 150)",
+  },
+  {
+    icon: DollarSign,
+    label: "Analytical → BigQuery",
+    query: "What's our average debtor days by business unit for FY24 vs FY25?",
+    route: "BigQuery Semantic Layer",
+    reason: "Derived metric across historical AR data — pre-governed in the semantic layer",
+    color: "oklch(0.55 0.15 150)",
+  },
+  {
     icon: GitBranch,
     label: "Hybrid → Both",
     query: "How does today's SIXT fleet utilisation compare to our 12-month average?",
     route: "NetSuite + BigQuery",
     reason: "Today's figure from NetSuite; historical average from BigQuery — merged in reasoning",
+    color: "var(--nrma-cyan)",
+  },
+  {
+    icon: Zap,
+    label: "Hybrid → Both",
+    query: "Is this month's Roadside operating cost tracking above or below the same period last year?",
+    route: "NetSuite + BigQuery",
+    reason: "Month-to-date actuals from NetSuite; prior year same-period from BigQuery — compared in one answer",
     color: "var(--nrma-cyan)",
   },
 ];
