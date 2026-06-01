@@ -11,6 +11,7 @@ const navLinks = [
   { label: "Routing Logic", href: "#routing" },
   { label: "Semantic Layer", href: "#semantic-layer" },
   { label: "Use Cases", href: "#usecases" },
+  { label: "SIXT AI", href: "#sixt-use-cases" },
   { label: "Roadmap", href: "#roadmap" },
   { label: "Tool Landscape", href: "#tool-landscape" },
   { label: "AU Adoption", href: "#australian-adoption" },
