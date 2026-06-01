@@ -14,6 +14,7 @@ import SemanticLayer from "@/components/SemanticLayer";
 import RoutingIntelligence from "@/components/RoutingIntelligence";
 import ToolLandscape from "@/components/ToolLandscape";
 import AustralianAdoption from "@/components/AustralianAdoption";
+import SixtUseCases from "@/components/SixtUseCases";
 import QuickJump from "@/components/QuickJump";
 
 export default function Home() {
@@ -27,6 +28,7 @@ export default function Home() {
       <RoutingIntelligence />
       <SemanticLayer />
       <UseCases />
+      <SixtUseCases />
       <Roadmap />
       <ToolLandscape />
       <AustralianAdoption />
